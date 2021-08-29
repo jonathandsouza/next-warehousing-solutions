@@ -13,14 +13,3 @@ steps:
               'push',
               'gcr.io/next-warehousing-solutions/github.com/jonathandsouza/next-warehousing-solutions-front-end:$SHORT_SHA',
           ]
-    - name: 'gcr.io/cloud-builders/gcloud'
-      args:
-          [
-              'beta',
-              'run',
-              'deploy',
-              'next-warehousing-solutions-service',
-              '--region=us-central1',
-              '--platform=managed',
-              '--image=gcr.io/next-warehousing-solutions/github.com/jonathandsouza/next-warehousing-solutions-front-end:$SHORT_SHA',
-          ]
