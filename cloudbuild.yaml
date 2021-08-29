@@ -4,14 +4,14 @@ steps:
           [
               'build',
               '-t',
-              'gcr.io/next-warehousing-solutions/github.com/jonathandsouza/next-warehousing-solutions:$SHORT_SHA',
+              'gcr.io/next-warehousing-solutions/github.com/jonathandsouza/next-warehousing-solutions-front-end:$SHORT_SHA',
               '.',
           ]
     - name: 'gcr.io/cloud-builders/docker'
       args:
           [
               'push',
-              'gcr.io/next-warehousing-solutions/github.com/jonathandsouza/next-warehousing-solutions:$SHORT_SHA',
+              'gcr.io/next-warehousing-solutions/github.com/jonathandsouza/next-warehousing-solutions-front-end:$SHORT_SHA',
           ]
     - name: 'gcr.io/cloud-builders/gcloud'
       args:
@@ -22,5 +22,5 @@ steps:
               'next-warehousing-solutions-service',
               '--region=us-central1',
               '--platform=managed',
-              '--image=gcr.io/next-warehousing-solutions/github.com/jonathandsouza/next-warehousing-solutions:$SHORT_SHA',
+              '--image=gcr.io/next-warehousing-solutions/github.com/jonathandsouza/next-warehousing-solutions-front-end:$SHORT_SHA',
           ]
