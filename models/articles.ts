@@ -6,9 +6,11 @@ interface IArticle {
 
 export interface IArticleService {
 	getAllArticles(): Promise<Array<IArticle>>
-	createArticle(): Promise<boolean>
+	createArticle(
+		params: Pick<IArticle, 'name' | 'amountInStock'>
+	): Promise<IArticle>
 	getArticleById(id: string): Promise<IArticle>
-	updateArticles(articles: Array<IArticle>): Promise<boolean>
+	updateArticles(articles: Array<IArticle>): Promise<Array<IArticle>>
 	removeArticleById(id: string): Promise<boolean>
 }
 
