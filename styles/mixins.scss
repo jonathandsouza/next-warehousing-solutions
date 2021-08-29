@@ -1,0 +1,305 @@
+/* #region UTILITY MIXINS */
+
+@mixin vertical-align-center {
+	display: block;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+@mixin horizontal-align-center {
+	display: block;
+	position: relative;
+	right: 50%;
+	transform: translateX(50%);
+}
+
+@mixin vertical-and-horizontal-align-center {
+	position: absolute;
+	right: 50%;
+	top: 50%;
+	transform: translate(50%, -50%);
+}
+
+@mixin hover-supported {
+	/* 
+	 * https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer 
+	 * coarse: The primary input mechanism includes a pointing device of limited accuracy.
+	 */
+	@media not all and (pointer: coarse) {
+		&:hover {
+			@content;
+		}
+	}
+}
+
+@mixin shimmer {
+	animation: shimmer 2s infinite linear;
+	background: linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%);
+	background-size: 1000px 100%;
+}
+
+@mixin shimmer-with-custom-color($color) {
+	animation: shimmer 2s infinite linear;
+	background: linear-gradient(
+		to right,
+		$color 4%,
+		lighten($color, 10%) 25%,
+		lighten($color, 1%) 36%
+	);
+	background-size: 1000px 100%;
+}
+
+@keyframes shimmer {
+	0% {
+		background-position: -1000px 0;
+	}
+
+	100% {
+		background-position: 1000px 0;
+	}
+}
+
+@mixin position-sticky($top) {
+	position: -webkit-sticky; /* Safari */
+	position: sticky;
+	top: $top + px;
+}
+
+/* #endregion ALIGNMENT MIXIN */
+
+/* #region THEME MIXIN */
+
+@mixin theme-color-decorator($selector) {
+	@include hotels-theme-color-decorator($selector);
+	@include vakantieparken-theme-color-decorator($selector);
+}
+
+@mixin hotels-theme-color-decorator($selector) {
+	:global(.theme.hotels #{$selector}) {
+		color: $hotels-primary;
+	}
+}
+
+@mixin vakantieparken-theme-color-decorator($selector) {
+	:global(.theme.vakantieparken #{$selector}) {
+		color: $vakantieparken-primary;
+	}
+}
+
+@mixin theme-background-color-decorator($selector) {
+	@include hotels-theme-background-color-decorator($selector);
+	@include vakantieparken-theme-background-color-decorator($selector);
+}
+
+@mixin theme-background-color-vakantieparken-secondary-decorator($selector) {
+	@include hotels-theme-background-color-decorator($selector);
+	@include vakantieparken-theme-background-color-secondary-decorator(
+		$selector
+	);
+}
+
+@mixin hotels-theme-background-color-decorator($selector) {
+	:global(.theme.hotels #{$selector}) {
+		background-color: $hotels-primary;
+	}
+}
+
+@mixin vakantieparken-theme-background-color-decorator($selector) {
+	:global(.theme.vakantieparken #{$selector}) {
+		background-color: $vakantieparken-primary;
+	}
+}
+
+@mixin vakantieparken-theme-background-color-secondary-decorator($selector) {
+	:global(.theme.vakantieparken #{$selector}) {
+		background-color: $vakantieparken-secondary;
+	}
+}
+
+@mixin theme-border-color-decorator($selector) {
+	@include hotels-theme-border-color-decorator($selector);
+	@include vakantieparken-theme-border-color-decorator($selector);
+}
+
+@mixin hotels-theme-border-color-decorator($selector) {
+	:global(.theme.hotels #{$selector}) {
+		border-color: $hotels-primary;
+	}
+}
+
+@mixin vakantieparken-theme-border-color-decorator($selector) {
+	:global(.theme.vakantieparken #{$selector}) {
+		border-color: $vakantieparken-primary;
+	}
+}
+
+@mixin theme-hotels() {
+	:global(.theme.hotels) {
+		@content;
+	}
+}
+
+@mixin theme-vakantieparken() {
+	:global(.theme.vakantieparken) {
+		@content;
+	}
+}
+
+/* #endregion THEME MIXIN */
+
+/* #region ANIMATION MIXIN */
+
+@mixin transform-translate($selectorX...) {
+	-webkit-transform: translate($selectorX);
+	-ms-transform: translate($selectorX);
+	-o-transform: translate($selectorX);
+	transform: translate($selectorX);
+}
+
+@mixin transition($transition...) {
+	-moz-transition: $transition;
+	-o-transition: $transition;
+	-webkit-transition: $transition;
+	transition: $transition;
+}
+
+@mixin scale($ratio) {
+	-webkit-transform: scale($ratio);
+	-moz-transform: scale($ratio);
+	-ms-transform: scale($ratio);
+	-o-transform: scale($ratio);
+	transform: scale($ratio);
+}
+
+@mixin rotate($deg) {
+	-webkit-transform: rotate($deg);
+	-moz-transform: rotate($deg);
+	-ms-transform: rotate($deg);
+	-o-transform: rotate($deg);
+	transform: rotate($deg);
+}
+
+@mixin collapsible(
+	$trigger-selector,
+	$collapsible-section-selector,
+	$max-height: '',
+	$animation-delay: 0.5s,
+	$timing-function: ease-out,
+	$activation-class: 'active'
+) {
+	#{$collapsible-section-selector} {
+		@include transition(max-height $animation-delay $timing-function);
+		max-height: 0;
+		overflow: hidden;
+	}
+
+	#{$trigger-selector}.#{$activation-class} #{$collapsible-section-selector} {
+		height: auto;
+
+		@if $max-height != '' {
+			max-height: $max-height;
+		} @else {
+			max-height: 500px;
+		}
+	}
+}
+
+@mixin animation-name($name) {
+	-ms-animation-name: $name;
+	-o-animation-name: $name;
+	-webkit-animation-name: $name;
+	animation-name: $name;
+}
+/* #endregion */
+
+/* #region FONT MIXINS */
+@function calculate-rem($size) {
+	@return $size / 16;
+}
+
+@mixin font-size($size) {
+	font-size: $size + px;
+	font-size: calculate-rem($size) + rem;
+}
+
+@mixin font-roboto() {
+	font-family: $font-roboto-slab;
+}
+
+/* #endregion */
+
+/* #region BREAKPOINT MIXINS */
+
+//sm mobile (479)
+@mixin bp-sm-mobile-max {
+	@media only screen and (max-width: $screen-sm-mobile-max) {
+		@content;
+	}
+}
+
+@mixin bp-lg-mobile-min {
+	@media only screen and (min-width: $screen-lg-mobile-min) {
+		@content;
+	}
+}
+
+//lg mobile (767)
+@mixin bp-lg-mobile-max {
+	@media only screen and (max-width: $screen-lg-mobile-max) {
+		@content;
+	}
+}
+
+@mixin bp-lg-mobile {
+	@media only screen and (min-width: $screen-lg-mobile-min) and (max-width: $screen-lg-mobile-max) {
+		@content;
+	}
+}
+
+@mixin bp-tablet-min {
+	@media only screen and (min-width: $screen-tablet-min) {
+		@content;
+	}
+}
+
+//tablet (991)
+@mixin bp-tablet-max {
+	@media only screen and (max-width: $screen-tablet-max) {
+		@content;
+	}
+}
+
+@mixin bp-tablet {
+	@media only screen and (min-width: $screen-tablet-min) and (max-width: $screen-tablet-max) {
+		@content;
+	}
+}
+
+@mixin bp-sm-desktop-min {
+	@media only screen and (min-width: $screen-sm-desktop-min) {
+		@content;
+	}
+}
+
+//sm desktop (1199)
+@mixin bp-sm-desktop-max {
+	@media only screen and (max-width: $screen-sm-desktop-max) {
+		@content;
+	}
+}
+
+@mixin bp-sm-desktop {
+	@media only screen and (min-width: $screen-sm-desktop-min) and (max-width: $screen-sm-desktop-max) {
+		@content;
+	}
+}
+
+//lg desktop (1200)
+@mixin bp-lg-desktop-min {
+	@media only screen and (min-width: $screen-lg-desktop-min) {
+		@content;
+	}
+}
+
+/* #endregion*/

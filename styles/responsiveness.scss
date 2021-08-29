@@ -1,0 +1,106 @@
+/* #region BREAK POINTS */
+
+/*  
+	(0 - 479px) Extra small screen / small mobile 
+    (480px - 767px) small screen / large mobile
+    (768px - 991px) medium screen / tablet
+    (992px - 1199px) large screen / desktop
+	(1200px and above) extra large screen / large desktop 
+	
+*/
+
+//Small mobile (0-479)
+$screen-sm-mobile-min: 0rem;
+$screen-sm-mobile-max: 29.938rem;
+
+//Large mobile (480-767)
+$screen-lg-mobile-min: 30rem;
+$screen-lg-mobile-max: 47.938rem;
+
+//tablet (768-991)
+$screen-tablet-min: 48rem;
+$screen-tablet-max: 61.938rem;
+
+// Medium screen / desktop (992-1199)
+$screen-sm-desktop-min: 62rem;
+$screen-sm-desktop-max: 74.938rem;
+
+// Large screen / wide desktop
+$screen-lg-desktop-min: 75rem; //1200px
+
+// So media queries don't overlap when required, provide a maximum
+$screen-sm-mobile: ($screen-sm-mobile-min - $screen-sm-mobile-max); // 0 - 479px
+$screen-lg-mobile: (
+	$screen-lg-mobile-min - $screen-lg-mobile-max
+); // 480px - 767px
+$screen-tablet: ($screen-tablet-min - $screen-tablet-max); // 768px - 991px
+$screen-sm-desktop: (
+	$screen-sm-desktop-min - $screen-sm-desktop-max
+); // 992px - 1199px
+$screen-lg-desktop: ($screen-lg-desktop-min); // 1200px
+
+// Extra small screen / mobile
+$screen-xs: 0rem;
+$screen-xs-min: $screen-xs;
+
+// Small screen / tablet
+$screen-sm: 30rem; // 480px
+$screen-sm-min: $screen-sm;
+
+// Medium screen / desktop
+$screen-md: 48rem; // 768px
+$screen-md-min: $screen-md;
+
+// Large screen / wide desktop
+$screen-lg: 62rem; // 992px
+$screen-lg-min: $screen-lg;
+
+// Extra Large screen / extra wide desktop
+$screen-xl: 75rem; //1200px
+$screen-xl-min: $screen-xl;
+
+// So media queries don't overlap when required, provide a maximum
+$screen-xs-max: ($screen-sm-min - 0.0625);
+$screen-sm-max: ($screen-md-min - 0.0625);
+$screen-md-max: ($screen-lg-min - 0.0625);
+$screen-lg-max: ($screen-xl-min - 0.0625);
+
+/*  #endregion */
+
+/*  #region CONTAINER STYLES */
+
+.container-fluid,
+.container {
+	width: 100%;
+	padding-right: 0.9375rem;
+	padding-left: 0.9375rem;
+	margin-right: auto;
+	margin-left: auto;
+	box-sizing: border-box;
+}
+
+.container-fluid {
+	padding-right: 2rem;
+	padding-left: 2rem;
+}
+
+@media only screen and (max-width: $screen-md) {
+	.container {
+		max-width: 46.875rem;
+		width: auto;
+	}
+}
+
+@media only screen and (min-width: $screen-lg) {
+	.container {
+		width: 60.625rem;
+	}
+}
+
+@media only screen and (min-width: $screen-xl) {
+	.container {
+		width: 73.125rem;
+	}
+}
+
+/* #endregion */
