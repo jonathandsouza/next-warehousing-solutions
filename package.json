@@ -6,7 +6,9 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint",
+		"build:image": "docker build -t next-warehousing-solutions-container .",
+		"run:image": "docker run -p 3000:3000 next-warehousing-solutions-container"
 	},
 	"dependencies": {
 		"isomorphic-unfetch": "^3.1.0",
