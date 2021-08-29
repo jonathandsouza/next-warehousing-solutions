@@ -1,7 +1,17 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { useState } from 'react'
+import IArticle from '../models/articles'
+import ArticleService from '../services/articles'
 
 const Home: NextPage = () => {
+	const [state, setState] = useState<Array<IArticle>>([])
+	const [singleArticle, setSingleArticle] = useState<IArticle | null>(null)
+
+	const [createdArticle, setCreatedArticle] = useState<any>(null)
+
+	const [removedArticle, setRemovedArticle] = useState<any>(null)
+
 	return (
 		<>
 			<Head>
@@ -14,6 +24,89 @@ const Home: NextPage = () => {
 			</Head>
 
 			<h1>Page scaffolding</h1>
+
+			<button
+				onClick={() => {
+					ArticleService.getAllArticles()
+						.then((resp) => setState(resp))
+						.catch((err) => console.log('caught this error', err))
+				}}
+			>
+				getAllArticles
+			</button>
+
+			<br />
+			<br />
+
+			<button
+				onClick={() => {
+					ArticleService.getArticleById(
+						'0517f083-0e15-4876-8d1f-6fa45900431c'
+					)
+						.then((resp) => setSingleArticle(resp))
+						.catch((err) =>
+							console.log('caught this error getArticleById', err)
+						)
+				}}
+			>
+				getArticleById
+			</button>
+
+			<br />
+			<br />
+
+			<button
+				onClick={() => {
+					ArticleService.createArticle({
+						amountInStock: 123,
+						name: 'jona',
+					})
+						.then((resp) => setCreatedArticle(resp))
+						.catch((err) => console.log('caught this error', err))
+				}}
+			>
+				createArticle
+			</button>
+
+			<br />
+			<br />
+
+			<button
+				onClick={() => {
+					ArticleService.removeArticleById(
+						'0517f083-0e15-4876-8d1f-6fa45900431c'
+					)
+						.then((resp) => setRemovedArticle(resp))
+						.catch((err) => console.log('caught this error', err))
+				}}
+			>
+				removeArticleById
+			</button>
+
+			<br />
+			<br />
+
+			<button
+				onClick={() => {
+					ArticleService.updateArticles([
+						{
+							id: '865c80a4-7ab0-46ca-93da-a06ec1e40633',
+							name: 'ona',
+							amountInStock: 1,
+						},
+					])
+						.then((resp) => setRemovedArticle(resp))
+						.catch((err) => console.log('caught this error', err))
+				}}
+			>
+				updateArticles
+			</button>
+
+			<p>state: {JSON.stringify(state)}</p>
+
+			<p>singleArticle: {JSON.stringify(singleArticle)}</p>
+
+			<p>createdArticle: {JSON.stringify(createdArticle)}</p>
 		</>
 	)
 }
