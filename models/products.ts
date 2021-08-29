@@ -1,14 +1,20 @@
 import IArticle from './articles'
 
-interface IProduct {
+export interface IProduct {
 	id: string
 	name: string
-	articles: Array<IArticle>
+	articles: Array<{
+		id: string
+		amountRequired: number
+	}>
 }
 
 export interface IProductService {
 	getAllProducts(): Promise<Array<IProduct>>
 	getProductById(id: string): Promise<IProduct>
-	updateProducts(products: Array<IProduct>): Promise<boolean>
+	updateProduct(products: IProduct): Promise<boolean>
 	removeProductById(id: string): Promise<boolean>
+	createProduct(
+		product: Pick<IProduct, 'name' | 'articles'>
+	): Promise<IProduct>
 }
