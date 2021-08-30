@@ -4,6 +4,7 @@ import { NavBar } from '../components/nav-bar/nav-bar'
 
 import '../styles/globals.scss'
 import 'normalize.css'
+import { MainLoader } from '../components/main-loader/main-loader'
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
@@ -12,6 +13,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 			<main>
 				<Component {...pageProps} />
 			</main>
+
+			<MainLoader />
 		</>
 	)
 }
