@@ -1,0 +1,24 @@
+@import '../../styles/mixins.scss';
+@import '../../styles/variables.scss';
+
+.container {
+	@include vertical-and-horizontal-align-center();
+	color: white;
+	width: 500px;
+	height: 300px;
+	background: #007bb2;
+	text-align: center;
+	border-radius: 10px;
+
+	border: solid #007bb2 1px;
+	box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+
+	position: fixed;
+
+	p {
+		font-family: $font-product-sans;
+		font-size: 2rem;
+	}
+}
