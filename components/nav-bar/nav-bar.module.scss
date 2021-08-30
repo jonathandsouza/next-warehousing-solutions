@@ -1,0 +1,65 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.navbar {
+	background-color: $color-brand-primary-light;
+	display: flex;
+
+	@include bp-lg-mobile-max {
+		align-items: center;
+		justify-content: center;
+		border: none;
+	}
+
+	.branding {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		letter-spacing: 0.005rem;
+		box-sizing: border-box;
+		color: #fff;
+		font-size: 22.1px;
+		font-weight: bold;
+		font-family: $font-product-sans;
+		padding: 0.5rem;
+
+		.icon {
+			margin-right: 1rem;
+		}
+
+		.brand-name {
+			border-right: 2px solid white;
+			padding-right: 0.5rem;
+
+			@include bp-lg-mobile-max {
+				border: none;
+			}
+		}
+	}
+
+	.nav-bar-list {
+		display: flex;
+		list-style: none;
+		padding: 0;
+		margin: 0px;
+
+		li {
+			padding: 1rem;
+			color: #fff;
+			font-size: 18px;
+			font-weight: bold;
+			font-family: $font-product-sans;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 110px;
+
+			&.active {
+				color: $color-brand-primary-dark;
+				padding-bottom: 11px;
+				border-bottom: 5px solid $color-brand-secondary-light;
+			}
+		}
+	}
+}

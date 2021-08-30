@@ -1,72 +1,3 @@
-/* #region BREAK POINTS */
-
-/*  
-	(0 - 479px) Extra small screen / small mobile 
-    (480px - 767px) small screen / large mobile
-    (768px - 991px) medium screen / tablet
-    (992px - 1199px) large screen / desktop
-	(1200px and above) extra large screen / large desktop 
-	
-*/
-
-//Small mobile (0-479)
-$screen-sm-mobile-min: 0rem;
-$screen-sm-mobile-max: 29.938rem;
-
-//Large mobile (480-767)
-$screen-lg-mobile-min: 30rem;
-$screen-lg-mobile-max: 47.938rem;
-
-//tablet (768-991)
-$screen-tablet-min: 48rem;
-$screen-tablet-max: 61.938rem;
-
-// Medium screen / desktop (992-1199)
-$screen-sm-desktop-min: 62rem;
-$screen-sm-desktop-max: 74.938rem;
-
-// Large screen / wide desktop
-$screen-lg-desktop-min: 75rem; //1200px
-
-// So media queries don't overlap when required, provide a maximum
-$screen-sm-mobile: ($screen-sm-mobile-min - $screen-sm-mobile-max); // 0 - 479px
-$screen-lg-mobile: (
-	$screen-lg-mobile-min - $screen-lg-mobile-max
-); // 480px - 767px
-$screen-tablet: ($screen-tablet-min - $screen-tablet-max); // 768px - 991px
-$screen-sm-desktop: (
-	$screen-sm-desktop-min - $screen-sm-desktop-max
-); // 992px - 1199px
-$screen-lg-desktop: ($screen-lg-desktop-min); // 1200px
-
-// Extra small screen / mobile
-$screen-xs: 0rem;
-$screen-xs-min: $screen-xs;
-
-// Small screen / tablet
-$screen-sm: 30rem; // 480px
-$screen-sm-min: $screen-sm;
-
-// Medium screen / desktop
-$screen-md: 48rem; // 768px
-$screen-md-min: $screen-md;
-
-// Large screen / wide desktop
-$screen-lg: 62rem; // 992px
-$screen-lg-min: $screen-lg;
-
-// Extra Large screen / extra wide desktop
-$screen-xl: 75rem; //1200px
-$screen-xl-min: $screen-xl;
-
-// So media queries don't overlap when required, provide a maximum
-$screen-xs-max: ($screen-sm-min - 0.0625);
-$screen-sm-max: ($screen-md-min - 0.0625);
-$screen-md-max: ($screen-lg-min - 0.0625);
-$screen-lg-max: ($screen-xl-min - 0.0625);
-
-/*  #endregion */
-
 /*  #region CONTAINER STYLES */
 
 .container-fluid,
@@ -104,3 +35,70 @@ $screen-lg-max: ($screen-xl-min - 0.0625);
 }
 
 /* #endregion */
+
+/*  #region RESPONSIVE STYLES */
+
+//small mobile (0-479)
+@media (max-width: $screen-sm-mobile-max) {
+	.hidden-sm-mobile {
+		display: none !important;
+	}
+}
+
+//large mobile (480-767)
+@media (min-width: $screen-lg-mobile-min) and (max-width: $screen-lg-mobile-max) {
+	.hidden-lg-mobile {
+		display: none !important;
+	}
+}
+
+//mobile (0-767)
+@media (max-width: $screen-lg-mobile-max) {
+	.hidden-mobile {
+		display: none !important;
+	}
+}
+
+//tablet (768-991)
+@media (min-width: $screen-tablet-min) and (max-width: $screen-tablet-max) {
+	.hidden-tablet {
+		display: none !important;
+	}
+}
+
+//mobile and tablet
+@media (max-width: $screen-tablet-max) {
+	.hidden-mobile-and-tablet {
+		display: none !important;
+	}
+}
+
+//sm desktop (992-1199)
+@media (min-width: $screen-sm-desktop-min) and (max-width: $screen-sm-desktop-max) {
+	.hidden-sm-desktop {
+		display: none !important;
+	}
+}
+
+//lg desktop (1200px and above)
+@media (min-width: $screen-lg-desktop-min) {
+	.hidden-lg-desktop {
+		display: none !important;
+	}
+}
+
+//desktop (992px and above)
+@media (min-width: $screen-sm-desktop-min) {
+	.hidden-desktop {
+		display: none !important;
+	}
+}
+
+// tablet and desktop (768px and above)
+@media (min-width: $screen-tablet-min) {
+	.hidden-tablet-and-desktop {
+		display: none !important;
+	}
+}
+
+/*  #endregion RESPONSIVE CLASSES */
