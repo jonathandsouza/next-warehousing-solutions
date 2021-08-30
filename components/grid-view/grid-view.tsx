@@ -127,23 +127,18 @@ export const GridView: FC<{}> = () => {
 				let reachedTarget = false
 
 				for (let i = 0; i < tiles.length; i++) {
-					// check if current tile is hovered
 					if (tiles[i] == e.currentTarget) {
 						reachedTarget = true
 						continue
 					}
 
-					// make other tiles darker
-					tiles[i].classList.add('darker')
+					tiles[i].classList.add(styles['darker'])
 				}
 			})
 
 			tile.addEventListener('mouseout', () => {
-				// move all tiles back to initial position
 				for (let i = 0; i < tiles.length; i++) {
-					tiles[i].classList.remove('shiftLeft')
-					tiles[i].classList.remove('shiftRight')
-					tiles[i].classList.remove('darker')
+					tiles[i].classList.remove(styles['darker'])
 				}
 			})
 		})
@@ -151,11 +146,11 @@ export const GridView: FC<{}> = () => {
 
 	return (
 		<>
-			<div className={'row'}>
+			<div className={styles['row']}>
 				{content.map((e, index) => {
 					return (
-						<div key={index} className={'tile'}>
-							<div className={'overlay'}></div>
+						<div key={index} className={'tile ' + styles['tile']}>
+							<div className={styles['overlay']}></div>
 						</div>
 					)
 				})}
