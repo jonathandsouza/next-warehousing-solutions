@@ -23,7 +23,7 @@ const Products: NextPage = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<h1>Products</h1>
+			<h1>Sales</h1>
 
 			<button
 				onClick={() => {
