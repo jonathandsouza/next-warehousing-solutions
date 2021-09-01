@@ -1,8 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import React, { useContext } from 'react'
-import { GridView } from '../components/grid-view/grid-view'
-import { MainLoader } from '../components/main-loader/main-loader'
+import ArticlesList from '../components/articles-list/articles-list'
 import LoaderContext from '../services/loader'
 
 const Articles: NextPage = () => {
@@ -18,21 +17,8 @@ const Articles: NextPage = () => {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-
-			<button
-				onClick={() => {
-					context.show ? context.hideLoader() : context.showLoader()
-				}}
-			>
-				toggle
-			</button>
-
-			<br />
-			<br />
-			<br />
-
 			<div className="container-fluid">
-				<GridView />
+				<ArticlesList />
 			</div>
 		</>
 	)
