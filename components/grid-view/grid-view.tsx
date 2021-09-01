@@ -1,124 +1,12 @@
-import { FC, useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
+import IArticle from '../../models/articles'
+import { IProduct } from '../../models/products'
 import styles from './grid-view.module.scss'
 
-const content = [
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-	'Orange is the new black',
-]
-
-export const GridView: FC<{}> = () => {
+export const GridView: FC<{
+	card: (content: any) => JSX.Element
+	contents: Array<IArticle | IProduct>
+}> = ({ contents, card }) => {
 	useEffect(() => {
 		const tiles = document.querySelectorAll('.tile')
 
@@ -147,10 +35,13 @@ export const GridView: FC<{}> = () => {
 	return (
 		<>
 			<div className={styles['row']}>
-				{content.map((e, index) => {
+				{contents.map((e, index) => {
 					return (
 						<div key={index} className={'tile ' + styles['tile']}>
-							<div className={styles['overlay']}></div>
+							{card({ content: e })}
+							<div className={styles['overlay']}>
+								{card({ content: e })}
+							</div>
 						</div>
 					)
 				})}
