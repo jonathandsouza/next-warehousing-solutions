@@ -8,6 +8,8 @@ import { Toolbar } from '../tool-bar/tool-bar.'
 import { ArticleCard } from './article-card/article-card'
 
 const ArticlesList = () => {
+	const [originalArticlesList, setOriginalArticlesList] =
+		useState<Array<IArticle> | null>(null)
 	const [articles, setArticles] = useState<Array<IArticle> | null>(null)
 	const [showDrawer, setShowDrawer] = useState<boolean>(false)
 	const [activeArticle, setActiveArticle] = useState<IArticle | null>(null)
@@ -18,17 +20,19 @@ const ArticlesList = () => {
 		loader.showLoader()
 		ArticleService.getAllArticles().then((articles) => {
 			setArticles(articles)
+			setOriginalArticlesList(articles)
 			loader.hideLoader()
 		})
 	}, [])
 
-	const search = (id: string) => {
-		debugger
-		loader.showLoader()
-		ArticleService.getArticleById(id).then((article) => {
-			setArticles([article])
-			loader.hideLoader()
-		})
+	const search = (str: string) => {
+		setArticles(
+			originalArticlesList?.filter(
+				(article) =>
+					article.name.indexOf(str) !== -1 ||
+					article.id.indexOf(str) !== -1
+			) || []
+		)
 	}
 
 	if (!articles) return null

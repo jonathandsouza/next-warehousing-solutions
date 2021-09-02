@@ -8,7 +8,13 @@ export const ArticleCard: FC<{
 }> = ({ content, onSelect }) => {
 	return (
 		<>
-			<div className={styles['wrapper']}>
+			<div
+				className={styles['wrapper']}
+				onClick={() => {
+					console.log('testing now ')
+					onSelect(content)
+				}}
+			>
 				<div className={styles['overviewInfo']}>
 					<div className={styles['productinfo']}>
 						<div className={styles['grouptext']}>
@@ -23,14 +29,6 @@ export const ArticleCard: FC<{
 					<p className={styles['title']}>Amount In stock</p>
 					<p>{content.amountInStock}</p>
 				</div>
-
-				<button
-					onClick={() => {
-						onSelect(content)
-					}}
-				>
-					edit
-				</button>
 			</div>
 		</>
 	)

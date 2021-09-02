@@ -14,9 +14,10 @@ export const NavBar = () => {
 
 	useEffect(() => {
 		const handleRouteChange = (url: string) => {
-			if (url.indexOf('/products') !== -1) {
+			debugger
+			if (url.indexOf('products') !== -1) {
 				setActivePage(PAGES.PRODUCTS)
-			} else if (url.indexOf('/sales') !== -1) {
+			} else if (url.indexOf('sales') !== -1) {
 				setActivePage(PAGES.SALES)
 			} else {
 				setActivePage(PAGES.ARTICLES)
@@ -24,6 +25,7 @@ export const NavBar = () => {
 		}
 
 		router.events.on('routeChangeStart', handleRouteChange)
+		handleRouteChange(location.href)
 
 		// If the component is unmounted, unsubscribe
 		// from the event with the `off` method:

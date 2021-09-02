@@ -19,6 +19,7 @@
 	transition: transform 500ms, opacity 500ms;
 	transform-origin: 50% 50%;
 	position: relative;
+	z-index: 11;
 }
 
 .overlay {
@@ -49,5 +50,6 @@
 }
 
 .darker {
-	opacity: 0.5;
+	opacity: 0.9;
+	z-index: 10;
 }

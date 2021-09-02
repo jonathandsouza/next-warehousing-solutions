@@ -6,6 +6,10 @@ export const Toolbar: FC<{ onSearch: (id: string) => void }> = ({
 }) => {
 	const ref = useRef()
 
+	const search = () => {
+		onSearch((document.getElementById('search') as any).value || '')
+	}
+
 	return (
 		<div className={styles['tool-bar-container']}>
 			<input
@@ -13,16 +17,14 @@ export const Toolbar: FC<{ onSearch: (id: string) => void }> = ({
 				type="text"
 				name="search"
 				id="search"
+				onKeyPress={(e) => {
+					if (e.key === 'Enter') {
+						search()
+					}
+				}}
 			/>
-			<button
-				className={styles['search-button']}
-				onClick={(e) =>
-					onSearch(
-						(document.getElementById('search') as any).value || ''
-					)
-				}
-			>
-				search by ID
+			<button className={styles['search-button']} onClick={search}>
+				search
 			</button>
 		</div>
 	)
