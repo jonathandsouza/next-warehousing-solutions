@@ -1,62 +1,122 @@
-import React, { FC, useRef, useState } from 'react'
-import IArticle from '../../models/articles'
-import Drawer from 'rc-drawer'
-import { Field, Form } from 'react-final-form'
-import Image from 'next/image'
+import React, { FC, useRef, useState } from 'react';
+import IArticle from '../../models/articles';
+import Drawer from 'rc-drawer';
+import { Field, Form } from 'react-final-form';
+import Image from 'next/image';
 
-import styles from './article-details.module.scss'
-import ArticleService from '../../services/articles'
-import ToastService from '../../services/toast'
+import styles from './article-details.module.scss';
+import ArticleService from '../../services/articles';
+import ToastService from '../../services/toast';
 
-const ArticleDetails: FC<{ article: IArticle | null; onClose: () => void }> = ({
-	article,
-	onClose,
-}) => {
-	const [isOpen, setIsOpen] = useState(true)
-	const [isLoading, setIsLoading] = useState(false)
+const ArticleDetails: FC<{
+	article: IArticle | null;
+	onClose: () => void;
+	onAdd: (article: IArticle) => void;
+	onUpdate: (article: IArticle) => void;
+	onDelete: (article: IArticle) => void;
+}> = ({ article, onClose, onAdd, onDelete, onUpdate }) => {
+	// region state
+	const [isOpen, setIsOpen] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
+	// endregion
 
-	const onSubmit = (value: { name: string; amountInStock: number }) => {
-		setIsLoading(true)
+	// region Add Article
+	const AddArticle = (value: any) => {
+		setIsLoading(true);
+
+		ToastService.promise<IArticle>(
+			ArticleService.createArticle({
+				name: value.name,
+				amountInStock: parseInt(value.amountInStock),
+			})
+		)
+			.then((article) => {
+				onAdd({
+					id: article.id,
+					name: value.name,
+					amountInStock: parseInt(value.amountInStock),
+				});
+				onClose();
+			})
+			.finally(() => {
+				setIsLoading(false);
+			});
+	};
+	// endregion
+
+	// region Update Article
+	const updateArticle = (value: any) => {
+		setIsLoading(true);
 
 		if (article) {
 			ToastService.promise(
-				ArticleService.updateArticles([{ ...article, ...value }]).then(
+				ArticleService.updateArticles([
+					{
+						id: article.id,
+						name: value.name,
+						amountInStock: parseInt(value.amountInStock),
+					},
+				]).then(
 					() => {
-						setIsLoading(false)
-						return Promise.resolve()
+						setIsLoading(false);
+						setTimeout(() => {
+							onUpdate({
+								...article,
+								...{
+									name: value.name,
+									amountInStock: parseInt(
+										value.amountInStock
+									),
+								},
+							});
+							onClose();
+						});
+						return Promise.resolve();
 					},
 					() => {
-						setIsLoading(false)
-						return Promise.reject()
+						setIsLoading(false);
+						return Promise.reject();
 					}
 				)
-			)
-		} else {
-			ToastService.promise(
-				ArticleService.createArticle(value).then(
-					() => {
-						setIsLoading(false)
-						return Promise.resolve()
-					},
-					() => {
-						setIsLoading(false)
-						return Promise.reject()
-					}
-				)
-			)
+			);
 		}
-	}
+	};
+	// endregion
 
-	//region: submit all forms
-	const submitForm = () => {
-		const forms = document.getElementsByClassName('article-form')
+	// region Delete Article
+	const deleteArticle = () => {
+		if (article) {
+			setIsLoading(true);
+			ToastService.promise(ArticleService.removeArticleById(article.id))
+				.then(() => {
+					onDelete(article);
+					onClose();
+				})
+				.finally(() => {
+					setIsLoading(false);
+				});
+		}
+	};
+	// endregion
+
+	// region submit form
+	const onSubmit = (value: { name: string; amountInStock: string }) => {
+		if (article) {
+			updateArticle(value);
+		} else {
+			AddArticle(value);
+		}
+	};
+
+	const submitFinalForm = () => {
+		const forms = document.getElementsByClassName('article-form');
 		for (const form of forms) {
 			form.dispatchEvent(
 				new Event('submit', { cancelable: true, bubbles: true })
-			)
+			);
 		}
-	}
-	// endregion;
+	};
+	//endregion
 
 	return (
 		<>
@@ -65,9 +125,8 @@ const ArticleDetails: FC<{ article: IArticle | null; onClose: () => void }> = ({
 				level={null}
 				placement={'right'}
 				onClose={() => {
-					console.log('on close click')
-					setIsOpen(false)
-					onClose()
+					setIsOpen(false);
+					onClose();
 				}}
 				width={'70vw'}
 				handler={false}
@@ -84,21 +143,52 @@ const ArticleDetails: FC<{ article: IArticle | null; onClose: () => void }> = ({
 						</div>
 
 						<div className={styles['drawer-title']}></div>
-						<button
-							className={styles['drawer-submit-button']}
-							onClick={submitForm}
-							disabled={isLoading}
-						>
-							{isLoading && (
-								<Image
-									src="/rings.svg"
-									alt=""
-									width={40}
-									height={40}
-								/>
-							)}
-							{!isLoading && 'Save'}
-						</button>
+
+						{!article && (
+							<button
+								className={
+									styles['drawer-btn'] +
+									' ' +
+									styles['drawer-save-button'] +
+									' btn-primary'
+								}
+								onClick={submitFinalForm}
+								disabled={isLoading}
+							>
+								{isLoading && (
+									<Image
+										src="/rings.svg"
+										alt=""
+										width={40}
+										height={40}
+									/>
+								)}
+								{!isLoading && 'Save'}
+							</button>
+						)}
+
+						{article && (
+							<button
+								className={
+									styles['drawer-btn'] +
+									' ' +
+									styles['drawer-delete-button'] +
+									' btn-primary'
+								}
+								onClick={deleteArticle}
+								disabled={isLoading}
+							>
+								{isLoading && (
+									<Image
+										src="/rings.svg"
+										alt=""
+										width={40}
+										height={40}
+									/>
+								)}
+								{!isLoading && 'Delete'}
+							</button>
+						)}
 					</div>
 
 					<Form
@@ -138,7 +228,7 @@ const ArticleDetails: FC<{ article: IArticle | null; onClose: () => void }> = ({
 				</div>
 			</Drawer>
 		</>
-	)
-}
+	);
+};
 
-export default ArticleDetails
+export default ArticleDetails;

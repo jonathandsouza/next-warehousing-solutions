@@ -3,15 +3,19 @@ import fetch from 'isomorphic-unfetch'
 export default async function fetchAPI<JSON = any>(
 	request: RequestInfo
 ): Promise<JSON> {
-	const res = await fetch(request)
-	const response = await res
-	const jsonResponse = await response.json()
+	try {
+		const res = await fetch(request)
+		const response = await res
+		const jsonResponse = await response.json()
 
-	if (jsonResponse.message && jsonResponse.message.length) {
-		return Promise.reject(jsonResponse)
+		if (jsonResponse.message && jsonResponse.message.length) {
+			return Promise.reject(jsonResponse)
+		}
+
+		return jsonResponse
+	} catch (exp) {
+		return Promise.reject()
 	}
-
-	return jsonResponse
 }
 
 export const fetchPOST = async function fetchPOST<JSON = any>(
