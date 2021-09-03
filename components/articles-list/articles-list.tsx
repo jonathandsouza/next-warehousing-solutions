@@ -13,16 +13,26 @@ const ArticlesList = () => {
 	const [articles, setArticles] = useState<Array<IArticle> | null>(null)
 	const [showDrawer, setShowDrawer] = useState<boolean>(false)
 	const [activeArticle, setActiveArticle] = useState<IArticle | null>(null)
+	const [failedToFetch, setFailedToFetch] = useState(false)
 
 	const loader = useContext(LoaderContext)
 
-	useEffect(() => {
+	const fetchArticles = () => {
 		loader.showLoader()
-		ArticleService.getAllArticles().then((articles) => {
-			setArticles(articles)
-			setOriginalArticlesList(articles)
-			loader.hideLoader()
-		})
+		ArticleService.getAllArticles().then(
+			(articles) => {
+				setArticles(articles)
+				setOriginalArticlesList(articles)
+				loader.hideLoader()
+			},
+			() => {
+				setFailedToFetch(true)
+			}
+		)
+	}
+
+	useEffect(() => {
+		fetchArticles()
 	}, [])
 
 	const search = (str: string) => {
@@ -41,6 +51,23 @@ const ArticlesList = () => {
 		<>
 			<Toolbar onSearch={search} />
 
+			<button
+				onClick={() => {
+					setActiveArticle(null)
+					setShowDrawer(true)
+				}}
+			>
+				Add Article
+			</button>
+
+			<button
+				onClick={() => {
+					fetchArticles()
+				}}
+			>
+				Reload
+			</button>
+
 			<GridView
 				card={({ content }: { content: IArticle }) => (
 					<ArticleCard
@@ -55,13 +82,24 @@ const ArticlesList = () => {
 			/>
 
 			{showDrawer && (
-				<ArticleDetails
-					article={activeArticle}
-					onClose={() => {
-						setActiveArticle(null)
-						setShowDrawer(false)
-					}}
-				/>
+				<div style={{ zIndex: 100 }}>
+					<ArticleDetails
+						article={activeArticle}
+						onClose={() => {
+							setActiveArticle(null)
+							setShowDrawer(false)
+						}}
+					/>
+				</div>
+			)}
+
+			{failedToFetch && (
+				<div>
+					<p>Failed to fetch articles</p>
+					<button onClick={() => fetchArticles()}>
+						fetch again!
+					</button>
+				</div>
 			)}
 		</>
 	)

@@ -14,7 +14,6 @@ export const NavBar = () => {
 
 	useEffect(() => {
 		const handleRouteChange = (url: string) => {
-			debugger
 			if (url.indexOf('products') !== -1) {
 				setActivePage(PAGES.PRODUCTS)
 			} else if (url.indexOf('sales') !== -1) {

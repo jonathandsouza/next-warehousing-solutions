@@ -6,20 +6,44 @@ import Image from 'next/image'
 
 import styles from './article-details.module.scss'
 import ArticleService from '../../services/articles'
+import ToastService from '../../services/toast'
 
 const ArticleDetails: FC<{ article: IArticle | null; onClose: () => void }> = ({
 	article,
 	onClose,
 }) => {
 	const [isOpen, setIsOpen] = useState(true)
-
-	const ref = useRef(null)
+	const [isLoading, setIsLoading] = useState(false)
 
 	const onSubmit = (value: { name: string; amountInStock: number }) => {
+		setIsLoading(true)
+
 		if (article) {
-			ArticleService.updateArticles([{ ...article, ...value }])
+			ToastService.promise(
+				ArticleService.updateArticles([{ ...article, ...value }]).then(
+					() => {
+						setIsLoading(false)
+						return Promise.resolve()
+					},
+					() => {
+						setIsLoading(false)
+						return Promise.reject()
+					}
+				)
+			)
 		} else {
-			ArticleService.createArticle(value)
+			ToastService.promise(
+				ArticleService.createArticle(value).then(
+					() => {
+						setIsLoading(false)
+						return Promise.resolve()
+					},
+					() => {
+						setIsLoading(false)
+						return Promise.reject()
+					}
+				)
+			)
 		}
 	}
 
@@ -63,8 +87,17 @@ const ArticleDetails: FC<{ article: IArticle | null; onClose: () => void }> = ({
 						<button
 							className={styles['drawer-submit-button']}
 							onClick={submitForm}
+							disabled={isLoading}
 						>
-							Save
+							{isLoading && (
+								<Image
+									src="/rings.svg"
+									alt=""
+									width={40}
+									height={40}
+								/>
+							)}
+							{!isLoading && 'Save'}
 						</button>
 					</div>
 
