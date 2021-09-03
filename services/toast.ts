@@ -1,5 +1,5 @@
-import { toast } from 'react-toastify'
-import IToastService from '../models/toast'
+import { toast } from 'react-toastify';
+import IToastService from '../models/toast';
 
 const ToastService: IToastService = {
 	promise: (promise, messages) => {
@@ -18,8 +18,10 @@ const ToastService: IToastService = {
 				pauseOnHover: true,
 				draggable: true,
 			}
-		)
-	},
-}
+		);
 
-export default ToastService
+		return promise;
+	},
+};
+
+export default ToastService;

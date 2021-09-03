@@ -1,0 +1,33 @@
+.failed-to-fetch-warning {
+	padding: 20px;
+	background: #007bb2;
+	margin-top: 15px;
+	color: white;
+	font-size: 1.2rem;
+	font-weight: bold;
+	border: 1px solid #9500ae;
+
+	span {
+		display: inline-block;
+		margin-right: 10px;
+	}
+}
+
+.button-list {
+	button {
+		margin-right: 5px;
+	}
+}
+
+.fetch-btn {
+	padding: 5px;
+	cursor: pointer;
+	background: #9500ae;
+	color: white;
+	border: 2px solid white;
+	font-weight: bold;
+
+	&:hover {
+		background: lighten(#9500ae, 10%);
+	}
+}

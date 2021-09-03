@@ -5,6 +5,8 @@ import { NavBar } from '../components/nav-bar/nav-bar'
 import '../styles/globals.scss'
 import '../styles/drawer.scss'
 import '../styles/forms.scss'
+import '../styles/buttons.scss'
+
 import 'normalize.css'
 import 'react-toastify/dist/ReactToastify.css'
 

@@ -1,12 +1,12 @@
 interface IToastService {
-	promise: (
+	promise: <T>(
 		promise: Promise<any>,
 		messages?: {
-			pending: string
-			success: string
-			error: string
+			pending: string;
+			success: string;
+			error: string;
 		}
-	) => void
+	) => Promise<T>;
 }
 
-export default IToastService
+export default IToastService;
