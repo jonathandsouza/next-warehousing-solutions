@@ -2,11 +2,10 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import React, { useContext } from 'react'
 import ArticlesList from '../components/articles-list/articles-list'
+import { Toolbar } from '../components/tool-bar/tool-bar.'
 import LoaderContext from '../services/loader'
 
 const Articles: NextPage = () => {
-	const context = useContext(LoaderContext)
-
 	return (
 		<>
 			<Head>
@@ -17,6 +16,7 @@ const Articles: NextPage = () => {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
+
 			<div className="container-fluid">
 				<ArticlesList />
 			</div>

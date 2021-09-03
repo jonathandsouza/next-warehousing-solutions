@@ -2,6 +2,7 @@ import { FC } from 'react'
 import IArticle from '../../../models/articles'
 import { IProduct } from '../../../models/products'
 import styles from './product-card.module.scss'
+import Image from 'next/image'
 
 export const ProductCard: FC<{ content: IProduct }> = ({ content }) => {
 	return (
@@ -22,6 +23,16 @@ export const ProductCard: FC<{ content: IProduct }> = ({ content }) => {
 						Articles:&nbsp;{content.articles.length}
 					</p>
 				</div>
+
+				{/* <div>
+					Edit{' '}
+					<Image
+						src="/arrow.svg"
+						width={20}
+						height={10}
+						alt="arrow"
+					/>
+				</div> */}
 			</div>
 		</>
 	)

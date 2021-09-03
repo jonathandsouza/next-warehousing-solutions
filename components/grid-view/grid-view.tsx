@@ -33,19 +33,17 @@ export const GridView: FC<{
 	}, [])
 
 	return (
-		<>
-			<div className={styles['row']}>
-				{contents.map((e, index) => {
-					return (
-						<div key={index} className={'tile ' + styles['tile']}>
+		<div className={styles['row']}>
+			{contents.map((e, index) => {
+				return (
+					<div key={index} className={'tile ' + styles['tile']}>
+						{card({ content: e })}
+						<div className={styles['overlay']}>
 							{card({ content: e })}
-							<div className={styles['overlay']}>
-								{card({ content: e })}
-							</div>
 						</div>
-					)
-				})}
-			</div>
-		</>
+					</div>
+				)
+			})}
+		</div>
 	)
 }

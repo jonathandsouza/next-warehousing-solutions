@@ -18,3 +18,23 @@ a {
 * {
 	box-sizing: border-box;
 }
+
+// main {
+// 	background: #f1f3f4;
+// }
+
+.drawer-content {
+	background: #f1f3f4;
+}
+
+.Toastify__toast {
+	z-index: 1000;
+}
+
+.drawer-right {
+	z-index: 10;
+}
+
+.drawer {
+	z-index: 20 !important;
+}

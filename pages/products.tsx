@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import React, { useState } from 'react'
 import ProductList from '../components/products-list/product-list'
+import { Toolbar } from '../components/tool-bar/tool-bar.'
 import { IProduct } from '../models/products'
 import ProductService from '../services/products'
 

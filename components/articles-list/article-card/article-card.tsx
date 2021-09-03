@@ -2,10 +2,19 @@ import { FC } from 'react'
 import IArticle from '../../../models/articles'
 import styles from './article-card.module.scss'
 
-export const ArticleCard: FC<{ content: IArticle }> = ({ content }) => {
+export const ArticleCard: FC<{
+	content: IArticle
+	onSelect: (article: IArticle) => void
+}> = ({ content, onSelect }) => {
 	return (
 		<>
-			<div className={styles['wrapper']}>
+			<div
+				className={styles['wrapper']}
+				onClick={() => {
+					console.log('testing now ')
+					onSelect(content)
+				}}
+			>
 				<div className={styles['overviewInfo']}>
 					<div className={styles['productinfo']}>
 						<div className={styles['grouptext']}>
