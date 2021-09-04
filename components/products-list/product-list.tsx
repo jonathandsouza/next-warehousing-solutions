@@ -98,8 +98,8 @@ const ProductList = () => {
 				card={({ content }: { content: IProduct }) => (
 					<ProductCard
 						content={content}
-						onSelect={(article) => {
-							setActiveProduct(article);
+						onSelect={(product) => {
+							setActiveProduct(product);
 							setShowDrawer(true);
 						}}
 					/>
@@ -111,38 +111,38 @@ const ProductList = () => {
 				<div style={{ zIndex: 100 }}>
 					<ProductDetails
 						product={activeProduct}
-						onAdd={(article) => {
+						onAdd={(product) => {
 							{
 								const newList = [
 									...(originalProductsList || []),
-									article,
+									product,
 								];
 								setOriginalProductsList(newList);
 								setProducts(getFilteredProductList(newList));
 							}
 						}}
-						onUpdate={(article) => {
+						onUpdate={(product) => {
 							{
-								const articleList = (
+								const productList = (
 									originalProductsList || []
-								).filter((a) => a.id !== article.id);
+								).filter((a) => a.id !== product.id);
 
-								articleList.push(article);
-								setOriginalProductsList(articleList);
+								productList.push(product);
+								setOriginalProductsList(productList);
 								setProducts(
-									getFilteredProductList(articleList)
+									getFilteredProductList(productList)
 								);
 							}
 						}}
-						onDelete={(article) => {
+						onDelete={(product) => {
 							{
-								const articleList = (
+								const productList = (
 									originalProductsList || []
-								).filter((a) => a.id !== article.id);
+								).filter((a) => a.id !== product.id);
 
-								setOriginalProductsList(articleList);
+								setOriginalProductsList(productList);
 								setProducts(
-									getFilteredProductList(articleList)
+									getFilteredProductList(productList)
 								);
 							}
 						}}

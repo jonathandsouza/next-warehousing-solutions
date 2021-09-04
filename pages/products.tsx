@@ -15,8 +15,9 @@ const Products: NextPage = () => {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-
-			<ProductList />
+			<div className="container-fluid">
+				<ProductList />
+			</div>
 		</>
 	);
 };

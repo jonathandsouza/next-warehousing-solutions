@@ -14,6 +14,8 @@ import ArticleService from '../../../services/articles';
 import IArticle from '../../../models/articles';
 import { FailedToFetch } from '../../failed-to-fetch/failed-to-fetch';
 import ProductArticleListItem from '../product-article-list-item/product-article-list-item';
+import { AllArticleList } from '../all-article-list/all-article-list';
+import { DrawerHeader } from '../../drawer/drawer-header/drawer-header';
 
 const ProductDetails: FC<{
 	product: IProduct | null;
@@ -33,6 +35,8 @@ const ProductDetails: FC<{
 	const [failedToFetchProductArticles, setFailedToFetchProductArticles] =
 		useState<boolean>(false);
 
+	const [showAllArticlesDrawer, setShowAllArticlesDrawer] = useState(false);
+
 	// endregion
 
 	// region Add Product
@@ -41,14 +45,14 @@ const ProductDetails: FC<{
 		ToastService.promise<IProduct>(
 			ProductService.createProduct({
 				name: value.name,
-				articles: [],
+				articles: linkedArticles,
 			})
 		)
 			.then((product) => {
 				onAdd({
 					id: product.id,
 					name: value.name,
-					articles: [],
+					articles: linkedArticles,
 				});
 				onClose();
 			})
@@ -81,7 +85,7 @@ const ProductDetails: FC<{
 							...product,
 							...{
 								name: value.name,
-								amountInStock: parseInt(value.amountInStock),
+								articles: linkedArticles,
 							},
 						});
 						onClose();
@@ -211,119 +215,78 @@ const ProductDetails: FC<{
 				width={isMobile ? '100vw' : '70vw'}
 				height={'100vh'}
 				handler={false}
+				className="drawer1"
 			>
-				<div className={DrawerStyles['drawer-container']}>
-					<div className={DrawerStyles['drawer-header']}>
-						<div
-							className={DrawerStyles['close']}
-							onClick={onClose}
-						>
-							<Image
-								src="/close.svg"
-								alt=""
-								width={30}
-								height={30}
-							/>
-						</div>
+				<>
+					<div className={DrawerStyles['drawer-container']}>
+						<DrawerHeader
+							onSave={() => submitFinalForm()}
+							isLoading={isLoading}
+							onDelete={() => deleteProduct()}
+							showDeleteButton={!!product}
+							onClose={() => onClose()}
+						/>
 
-						<div className={DrawerStyles['drawer-title']}></div>
-
-						<button
-							className={
-								DrawerStyles['drawer-btn'] +
-								' ' +
-								DrawerStyles['drawer-save-button'] +
-								' btn-primary'
-							}
-							onClick={submitFinalForm}
-							disabled={isLoading}
-						>
-							{isLoading && (
-								<Image
-									src="/rings.svg"
-									alt=""
-									width={40}
-									height={40}
-								/>
+						<Form
+							onSubmit={onSubmit}
+							initialValues={{
+								name: product?.name,
+							}}
+							render={({ handleSubmit }) => (
+								<form
+									onSubmit={handleSubmit}
+									className="product-form"
+								>
+									<div className="form-title">Product</div>
+									<div>
+										<label>Name</label>
+										<Field
+											name="name"
+											type="text"
+											component="input"
+											placeholder="Name"
+										/>
+									</div>
+								</form>
 							)}
-							{!isLoading && 'Save'}
-						</button>
+						/>
 
-						{product && (
-							<button
-								className={
-									DrawerStyles['drawer-btn'] +
-									' ' +
-									DrawerStyles['drawer-delete-button'] +
-									' btn-primary'
-								}
-								onClick={deleteProduct}
-								disabled={isLoading}
-							>
-								{isLoading && (
+						<div
+							className={
+								styles['articles-list'] + ' form-container'
+							}
+						>
+							<div className="form-title">
+								Articles list
+								<div
+									className={styles.add}
+									onClick={() =>
+										setShowAllArticlesDrawer(true)
+									}
+								>
 									<Image
-										src="/rings.svg"
+										className={styles.remove}
+										src="/add.svg"
 										alt=""
-										width={40}
-										height={40}
-									/>
-								)}
-								{!isLoading && 'Delete'}
-							</button>
-						)}
-					</div>
-					<Form
-						onSubmit={onSubmit}
-						initialValues={{
-							name: product?.name,
-						}}
-						render={({ handleSubmit }) => (
-							<form
-								onSubmit={handleSubmit}
-								className="product-form"
-							>
-								<div className="form-title">Product</div>
-								<div>
-									<label>Name</label>
-									<Field
-										name="name"
-										type="text"
-										component="input"
-										placeholder="Name"
+										width={30}
+										height={30}
 									/>
 								</div>
-							</form>
-						)}
-					/>
-
-					<div
-						className={styles['articles-list'] + ' form-container'}
-					>
-						<div className="form-title">
-							Articles list
-							<div className={styles.add}>
-								<Image
-									className={styles.remove}
-									src="/add.svg"
-									alt=""
-									width={30}
-									height={30}
-								/>
 							</div>
-						</div>
 
-						{linkedArticles.map((article, index) => (
-							<ProductArticleListItem
-								article={article}
-								key={article.id}
-								onAmountRequiredChanged={(amount) =>
-									updateAmountRequired(index, amount)
-								}
-								onRemove={(article) =>
-									removeArticleFromProduct(article)
-								}
-							/>
-						))}
+							{linkedArticles.map((article, index) => (
+								<ProductArticleListItem
+									article={article}
+									key={article.id}
+									onAmountRequiredChanged={(amount) =>
+										updateAmountRequired(index, amount)
+									}
+									onRemove={(article) =>
+										removeArticleFromProduct(article)
+									}
+								/>
+							))}
+						</div>
 
 						{failedToFetchProductArticles && (
 							<FailedToFetch
@@ -333,7 +296,28 @@ const ProductDetails: FC<{
 							/>
 						)}
 					</div>
-				</div>
+
+					{showAllArticlesDrawer && (
+						<AllArticleList
+							filterArticlesByIds={linkedArticles.map(
+								(e) => e.id
+							)}
+							addToProductArticles={(articles) => {
+								setLinkedArticles([
+									...linkedArticles,
+									...articles.map((e) => ({
+										...e,
+										...{
+											amountRequired: 1,
+										},
+									})),
+								]);
+
+								setShowAllArticlesDrawer(false);
+							}}
+						/>
+					)}
+				</>
 			</Drawer>
 		</>
 	);

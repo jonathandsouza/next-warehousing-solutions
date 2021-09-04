@@ -9,6 +9,7 @@ import ToastService from '../../../services/toast';
 import viewport from '../../../services/viewport';
 
 import styles from '../../../styles/drawer.module.scss';
+import { DrawerHeader } from '../../drawer/drawer-header/drawer-header';
 
 const ArticleDetails: FC<{
 	article: IArticle | null;
@@ -137,62 +138,13 @@ const ArticleDetails: FC<{
 				handler={false}
 			>
 				<div className={styles['drawer-container']}>
-					<div className={styles['drawer-header']}>
-						<div className={styles['close']} onClick={onClose}>
-							<Image
-								src="/cross.svg"
-								alt=""
-								width={30}
-								height={30}
-							/>
-						</div>
-
-						<div className={styles['drawer-title']}></div>
-
-						<button
-							className={
-								styles['drawer-btn'] +
-								' ' +
-								styles['drawer-save-button'] +
-								' btn-primary'
-							}
-							onClick={submitFinalForm}
-							disabled={isLoading}
-						>
-							{isLoading && (
-								<Image
-									src="/rings.svg"
-									alt=""
-									width={40}
-									height={40}
-								/>
-							)}
-							{!isLoading && 'Save'}
-						</button>
-
-						{article && (
-							<button
-								className={
-									styles['drawer-btn'] +
-									' ' +
-									styles['drawer-delete-button'] +
-									' btn-primary'
-								}
-								onClick={deleteArticle}
-								disabled={isLoading}
-							>
-								{isLoading && (
-									<Image
-										src="/rings.svg"
-										alt=""
-										width={40}
-										height={40}
-									/>
-								)}
-								{!isLoading && 'Delete'}
-							</button>
-						)}
-					</div>
+					<DrawerHeader
+						onSave={() => submitFinalForm()}
+						isLoading={isLoading}
+						onDelete={() => deleteArticle()}
+						showDeleteButton={!!article}
+						onClose={() => onClose()}
+					/>
 
 					<Form
 						onSubmit={onSubmit}
