@@ -7,6 +7,7 @@ import Image from 'next/image';
 import styles from './article-details.module.scss';
 import ArticleService from '../../services/articles';
 import ToastService from '../../services/toast';
+import viewport from '../../services/viewport';
 
 const ArticleDetails: FC<{
 	article: IArticle | null;
@@ -118,17 +119,20 @@ const ArticleDetails: FC<{
 	};
 	//endregion
 
+	const { isMobile } = viewport.getViewport();
+
 	return (
 		<>
 			<Drawer
 				open={isOpen}
 				level={null}
-				placement={'right'}
+				placement={isMobile ? 'bottom' : 'right'}
 				onClose={() => {
 					setIsOpen(false);
 					onClose();
 				}}
-				width={'70vw'}
+				width={isMobile ? '100vw' : '70vw'}
+				height={'100vh'}
 				handler={false}
 			>
 				<div className={styles['drawer-container']}>
@@ -144,28 +148,26 @@ const ArticleDetails: FC<{
 
 						<div className={styles['drawer-title']}></div>
 
-						{!article && (
-							<button
-								className={
-									styles['drawer-btn'] +
-									' ' +
-									styles['drawer-save-button'] +
-									' btn-primary'
-								}
-								onClick={submitFinalForm}
-								disabled={isLoading}
-							>
-								{isLoading && (
-									<Image
-										src="/rings.svg"
-										alt=""
-										width={40}
-										height={40}
-									/>
-								)}
-								{!isLoading && 'Save'}
-							</button>
-						)}
+						<button
+							className={
+								styles['drawer-btn'] +
+								' ' +
+								styles['drawer-save-button'] +
+								' btn-primary'
+							}
+							onClick={submitFinalForm}
+							disabled={isLoading}
+						>
+							{isLoading && (
+								<Image
+									src="/rings.svg"
+									alt=""
+									width={40}
+									height={40}
+								/>
+							)}
+							{!isLoading && 'Save'}
+						</button>
 
 						{article && (
 							<button

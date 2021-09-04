@@ -12,6 +12,10 @@
 	-moz-box-pack: center;
 	justify-content: center;
 	padding: 25px;
+
+	@include bp-tablet-max {
+		width: 100%;
+	}
 }
 
 .search-bar {
@@ -37,5 +41,9 @@
 
 	&:hover {
 		background: lighten(#9500ae, 10%);
+	}
+
+	@include bp-lg-mobile-max {
+		display: none;
 	}
 }
