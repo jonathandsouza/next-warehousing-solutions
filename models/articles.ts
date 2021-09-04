@@ -12,6 +12,7 @@ export interface IArticleService {
 	getArticleById(id: string): Promise<IArticle>;
 	updateArticles(articles: Array<IArticle>): Promise<Array<IArticle>>;
 	removeArticleById(id: string): Promise<boolean>;
+	getArticleByIds(ids: Array<string>): Promise<Array<IArticle>>;
 }
 
 export default IArticle;
