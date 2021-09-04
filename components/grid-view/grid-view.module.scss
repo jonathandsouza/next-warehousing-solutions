@@ -34,7 +34,9 @@
 }
 
 .tile:hover {
-	transform: scale(1.2);
+	@include bp-tablet-min {
+		transform: scale(1.2);
+	}
 }
 
 .tile:hover .overlay {

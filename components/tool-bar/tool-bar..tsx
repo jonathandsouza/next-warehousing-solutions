@@ -1,14 +1,12 @@
-import { FC, useRef } from 'react'
-import styles from './tool-bar.module.scss'
+import { FC, useRef } from 'react';
+import styles from './tool-bar.module.scss';
 
 export const Toolbar: FC<{ onSearch: (id: string) => void }> = ({
 	onSearch,
 }) => {
-	const ref = useRef()
-
 	const search = () => {
-		onSearch((document.getElementById('search') as any).value || '')
-	}
+		onSearch((document.getElementById('search') as any).value || '');
+	};
 
 	return (
 		<div className={styles['tool-bar-container']}>
@@ -17,9 +15,10 @@ export const Toolbar: FC<{ onSearch: (id: string) => void }> = ({
 				type="text"
 				name="search"
 				id="search"
+				placeholder="search"
 				onKeyPress={(e) => {
 					if (e.key === 'Enter') {
-						search()
+						search();
 					}
 				}}
 			/>
@@ -27,5 +26,5 @@ export const Toolbar: FC<{ onSearch: (id: string) => void }> = ({
 				search
 			</button>
 		</div>
-	)
-}
+	);
+};
