@@ -27,6 +27,16 @@ const ArticleService: IArticleService = {
 		);
 	},
 
+	getArticleByIds(ids) {
+		const promiseQ: Array<Promise<IArticle>> = [];
+
+		ids.forEach((id) => {
+			promiseQ.push(ArticleService.getArticleById(id));
+		});
+
+		return Promise.all(promiseQ);
+	},
+
 	createArticle(article: IArticle) {
 		return fetchPOST(environment.getEndPointURL() + 'articles', {
 			name: article.name,

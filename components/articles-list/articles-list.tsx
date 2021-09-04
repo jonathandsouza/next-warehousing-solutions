@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import IArticle from '../../models/articles';
 import ArticleService from '../../services/articles';
 import LoaderContext from '../../services/loader';
-import ArticleDetails from '../article-details/article-details';
+import ArticleDetails from './article-details/article-details';
 import { GridView } from '../grid-view/grid-view';
 import { Toolbar } from '../tool-bar/tool-bar.';
 import { ArticleCard } from './article-card/article-card';
 
 import styles from './articles-list.module.scss';
+import { FailedToFetch } from '../failed-to-fetch/failed-to-fetch';
 
 const ArticlesList = () => {
 	const [originalArticlesList, setOriginalArticlesList] =
@@ -89,17 +90,7 @@ const ArticlesList = () => {
 				</button>
 			</div>
 
-			{failedToFetch && (
-				<div className={styles['failed-to-fetch-warning']}>
-					<span>Failed to fetch articles</span>
-					<button
-						className={styles['fetch-btn']}
-						onClick={() => fetchArticles()}
-					>
-						fetch again!
-					</button>
-				</div>
-			)}
+			{failedToFetch && <FailedToFetch onRefetchClick={fetchArticles} />}
 
 			{articles && articles.length > 0 && (
 				<GridView

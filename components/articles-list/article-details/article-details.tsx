@@ -1,13 +1,14 @@
 import React, { FC, useRef, useState } from 'react';
-import IArticle from '../../models/articles';
+import IArticle from '../../../models/articles';
 import Drawer from 'rc-drawer';
 import { Field, Form } from 'react-final-form';
 import Image from 'next/image';
 
-import styles from './article-details.module.scss';
-import ArticleService from '../../services/articles';
-import ToastService from '../../services/toast';
-import viewport from '../../services/viewport';
+import ArticleService from '../../../services/articles';
+import ToastService from '../../../services/toast';
+import viewport from '../../../services/viewport';
+
+import styles from '../../../styles/drawer.module.scss';
 
 const ArticleDetails: FC<{
 	article: IArticle | null;

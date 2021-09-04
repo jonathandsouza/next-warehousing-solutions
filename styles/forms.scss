@@ -1,4 +1,13 @@
-form {
+form,
+.form-container {
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 0 0 1px #dadce0;
+	padding-left: 24px;
+	padding-right: 24px;
+	margin: 24px;
+	padding-bottom: 16px;
+
 	.form-title {
 		font-style: normal;
 		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -51,7 +60,8 @@ form {
 		background-color: #45a049;
 	}
 
-	label {
+	label,
+	.label-text {
 		cursor: default;
 		font-style: normal;
 		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -69,12 +79,4 @@ form {
 		padding-bottom: 1px;
 		padding-top: 2px;
 	}
-
-	background: #fff;
-	border-radius: 8px;
-	box-shadow: 0 0 0 1px #dadce0;
-	padding-left: 24px;
-	padding-right: 24px;
-	margin: 24px;
-	padding-bottom: 16px;
 }
