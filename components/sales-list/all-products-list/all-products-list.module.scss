@@ -1,0 +1,31 @@
+.table-container {
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 0 0 1px #dadce0;
+	padding-bottom: 16px;
+	border-collapse: collapse;
+	width: 100%;
+
+	thead {
+		height: 50px;
+		border-bottom: 2px solid grey;
+	}
+
+	tbody {
+		height: 500px;
+		overflow: scroll;
+	}
+
+	tr {
+		td {
+			text-align: center;
+			border-bottom: 1px solid #f1f1f1;
+			padding: 20px;
+		}
+	}
+
+	input {
+		width: 17px;
+		height: 17px;
+	}
+}
