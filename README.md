@@ -1,6 +1,6 @@
 # Next warehousing solutions (NWS)
 
-A complete end to end solution for every warehousing management needs.
+A complete end to end solution for every warehousing management need.
 
 ## Tech
 
