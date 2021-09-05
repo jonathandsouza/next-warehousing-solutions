@@ -1,12 +1,13 @@
 import React, { FC, useEffect } from 'react';
 import IArticle from '../../models/articles';
 import { IProduct } from '../../models/products';
+import ISale from '../../models/sales';
 import viewport from '../../services/viewport';
 import styles from './grid-view.module.scss';
 
 export const GridView: FC<{
 	card: (content: any) => JSX.Element;
-	contents: Array<IArticle | IProduct>;
+	contents: Array<IArticle | IProduct | ISale>;
 }> = ({ contents, card }) => {
 	useEffect(() => {
 		if (viewport.getViewport().isDesktop) {
