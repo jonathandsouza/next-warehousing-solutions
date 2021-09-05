@@ -181,6 +181,7 @@ const SaleDetails: FC<{
 
 	useEffect(() => {
 		fetchSaleProductsList();
+		// eslint-disable-next-line
 	}, []);
 
 	const { isMobile } = viewport.getViewport();

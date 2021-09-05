@@ -53,6 +53,7 @@ export const AllProductList: FC<{
 
 	useEffect(() => {
 		fetchAllProductsList();
+		// eslint-disable-next-line
 	}, []);
 
 	return (

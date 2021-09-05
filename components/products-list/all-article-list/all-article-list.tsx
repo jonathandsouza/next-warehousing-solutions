@@ -52,6 +52,7 @@ export const AllArticleList: FC<{
 
 	useEffect(() => {
 		fetchAllArticlesList();
+		// eslint-disable-next-line
 	}, []);
 
 	return (
