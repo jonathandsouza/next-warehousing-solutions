@@ -6,7 +6,6 @@ import Image from 'next/image';
 import ToastService from '../../../services/toast';
 import viewport from '../../../services/viewport';
 
-import DrawerStyles from '../../../styles/drawer.module.scss';
 import styles from './sale-details.module.scss';
 import ProductService from '../../../services/products';
 import { FailedToFetch } from '../../failed-to-fetch/failed-to-fetch';

@@ -8,7 +8,6 @@ import ArticleService from '../../../services/articles';
 import ToastService from '../../../services/toast';
 import viewport from '../../../services/viewport';
 
-import styles from '../../../styles/drawer.module.scss';
 import { DrawerHeader } from '../../drawer/drawer-header/drawer-header';
 
 const ArticleDetails: FC<{

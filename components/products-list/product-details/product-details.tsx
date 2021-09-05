@@ -8,7 +8,6 @@ import ToastService from '../../../services/toast';
 import viewport from '../../../services/viewport';
 import { IProduct, IProductArticle } from '../../../models/products';
 
-import DrawerStyles from '../../../styles/drawer.module.scss';
 import styles from './product-details.module.scss';
 import ArticleService from '../../../services/articles';
 import IArticle from '../../../models/articles';

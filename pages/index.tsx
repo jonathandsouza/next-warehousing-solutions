@@ -1,9 +1,7 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import React, { useContext } from 'react'
-import ArticlesList from '../components/articles-list/articles-list'
-import { Toolbar } from '../components/tool-bar/tool-bar.'
-import LoaderContext from '../services/loader'
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import React, { useContext } from 'react';
+import ArticlesList from '../components/articles-list/articles-list';
 
 const Articles: NextPage = () => {
 	return (
@@ -21,7 +19,7 @@ const Articles: NextPage = () => {
 				<ArticlesList />
 			</div>
 		</>
-	)
-}
+	);
+};
 
-export default Articles
+export default Articles;
