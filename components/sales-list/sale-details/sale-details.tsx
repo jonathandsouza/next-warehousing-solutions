@@ -200,82 +200,76 @@ const SaleDetails: FC<{
 			className="drawer1"
 		>
 			<>
-				<div className={DrawerStyles['drawer-container']}>
-					<DrawerHeader
-						onSave={() => onSubmit()}
-						isLoading={isLoading}
-						onDelete={() => deleteSale()}
-						showDeleteButton={!!sale}
-						onClose={() => onClose()}
-						disableSaveButton={!linkedProduct}
-					/>
+				<DrawerHeader
+					onSave={() => onSubmit()}
+					isLoading={isLoading}
+					onDelete={() => deleteSale()}
+					showDeleteButton={!!sale}
+					onClose={() => onClose()}
+					disableSaveButton={!linkedProduct}
+				/>
 
-					{sale && (
-						<div
-							className={
-								styles['products-list'] + ' form-container'
-							}
-						>
-							<div className="form-title">Sale Details</div>
-
-							<div className="name label-text">
-								<span className={styles['product-title']}>
-									id:&nbsp;
-								</span>
-								<span className={styles['product-value']}>
-									{sale.id}
-								</span>
-							</div>
-
-							<div className="name label-text">
-								<span className={styles['product-title']}>
-									Created on:&nbsp;
-								</span>
-								<span className={styles['product-value']}>
-									{sale.createdAt.toDateString()}
-								</span>
-							</div>
-						</div>
-					)}
-
+				{sale && (
 					<div
 						className={styles['products-list'] + ' form-container'}
 					>
-						<div className="form-title">
-							Products list
-							<div
-								className={styles.add}
-								onClick={() => setShowAllProductsDrawer(true)}
-							>
-								<Image
-									className={styles.remove}
-									src="/add.svg"
-									alt=""
-									width={30}
-									height={30}
-								/>
-							</div>
+						<div className="form-title">Sale Details</div>
+
+						<div className="name label-text">
+							<span className={styles['product-title']}>
+								id:&nbsp;
+							</span>
+							<span className={styles['product-value']}>
+								{sale.id}
+							</span>
 						</div>
 
-						{linkedProduct && (
-							<SaleProductListItem
-								amountSold={sale ? sale.product.amountSold : 0}
-								product={linkedProduct}
-								onAmountSoldChanged={(amount) =>
-									updatedAmountSold(amount)
-								}
-								onRemove={(product) => {}}
-								showRemoveIcon={false}
+						<div className="name label-text">
+							<span className={styles['product-title']}>
+								Created on:&nbsp;
+							</span>
+							<span className={styles['product-value']}>
+								{sale.createdAt.toDateString()}
+							</span>
+						</div>
+					</div>
+				)}
+
+				<div className={styles['products-list'] + ' form-container'}>
+					<div className="form-title">
+						Products list
+						<div
+							className={styles.add}
+							onClick={() => setShowAllProductsDrawer(true)}
+						>
+							<Image
+								className={styles.remove}
+								src="/add.svg"
+								alt=""
+								width={30}
+								height={30}
 							/>
-						)}
+						</div>
 					</div>
 
-					{failedToFetchSaleProducts && (
-						<FailedToFetch
-							onRefetchClick={() => fetchSaleProductsList()}
+					{linkedProduct && (
+						<SaleProductListItem
+							amountSold={sale ? sale.product.amountSold : 0}
+							product={linkedProduct}
+							onAmountSoldChanged={(amount) =>
+								updatedAmountSold(amount)
+							}
+							onRemove={(product) => {}}
+							showRemoveIcon={false}
 						/>
 					)}
 				</div>
+
+				{failedToFetchSaleProducts && (
+					<FailedToFetch
+						onRefetchClick={() => fetchSaleProductsList()}
+					/>
+				)}
 
 				{showAllProductsDrawer && (
 					<AllProductList

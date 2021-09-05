@@ -217,84 +217,76 @@ const ProductDetails: FC<{
 				className="drawer1"
 			>
 				<>
-					<div className={DrawerStyles['drawer-container']}>
-						<DrawerHeader
-							onSave={() => submitFinalForm()}
-							isLoading={isLoading}
-							onDelete={() => deleteProduct()}
-							showDeleteButton={!!product}
-							onClose={() => onClose()}
-						/>
+					<DrawerHeader
+						onSave={() => submitFinalForm()}
+						isLoading={isLoading}
+						onDelete={() => deleteProduct()}
+						showDeleteButton={!!product}
+						onClose={() => onClose()}
+					/>
 
-						<Form
-							onSubmit={onSubmit}
-							initialValues={{
-								name: product?.name,
-							}}
-							render={({ handleSubmit }) => (
-								<form
-									onSubmit={handleSubmit}
-									className="product-form"
-								>
-									<div className="form-title">Product</div>
-									<div>
-										<label>Name</label>
-										<Field
-											name="name"
-											type="text"
-											component="input"
-											placeholder="Name"
-										/>
-									</div>
-								</form>
-							)}
-						/>
-
-						<div
-							className={
-								styles['articles-list'] + ' form-container'
-							}
-						>
-							<div className="form-title">
-								Articles list
-								<div
-									className={styles.add}
-									onClick={() =>
-										setShowAllArticlesDrawer(true)
-									}
-								>
-									<Image
-										className={styles.remove}
-										src="/add.svg"
-										alt=""
-										width={30}
-										height={30}
+					<Form
+						onSubmit={onSubmit}
+						initialValues={{
+							name: product?.name,
+						}}
+						render={({ handleSubmit }) => (
+							<form
+								onSubmit={handleSubmit}
+								className="product-form"
+							>
+								<div className="form-title">Product</div>
+								<div>
+									<label>Name</label>
+									<Field
+										name="name"
+										type="text"
+										component="input"
+										placeholder="Name"
 									/>
 								</div>
-							</div>
+							</form>
+						)}
+					/>
 
-							{linkedArticles.map((article, index) => (
-								<ProductArticleListItem
-									article={article}
-									key={article.id}
-									onAmountRequiredChanged={(amount) =>
-										updateAmountRequired(index, amount)
-									}
-									onRemove={(article) =>
-										removeArticleFromProduct(article)
-									}
+					<div
+						className={styles['articles-list'] + ' form-container'}
+					>
+						<div className="form-title">
+							Articles list
+							<div
+								className={styles.add}
+								onClick={() => setShowAllArticlesDrawer(true)}
+							>
+								<Image
+									className={styles.remove}
+									src="/add.svg"
+									alt=""
+									width={30}
+									height={30}
 								/>
-							))}
+							</div>
 						</div>
 
-						{failedToFetchProductArticles && (
-							<FailedToFetch
-								onRefetchClick={() =>
-									fetchProductArticlesList()
+						{linkedArticles.map((article, index) => (
+							<ProductArticleListItem
+								article={article}
+								key={article.id}
+								onAmountRequiredChanged={(amount) =>
+									updateAmountRequired(index, amount)
+								}
+								onRemove={(article) =>
+									removeArticleFromProduct(article)
 								}
 							/>
-						)}
+						))}
 					</div>
+
+					{failedToFetchProductArticles && (
+						<FailedToFetch
+							onRefetchClick={() => fetchProductArticlesList()}
+						/>
+					)}
 
 					{showAllArticlesDrawer && (
 						<AllArticleList

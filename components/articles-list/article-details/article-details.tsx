@@ -140,50 +140,45 @@ const ArticleDetails: FC<{
 				height={isMobile ? '90vh' : '100vh'}
 				handler={false}
 			>
-				<div className={styles['drawer-container']}>
-					<DrawerHeader
-						onSave={() => submitFinalForm()}
-						isLoading={isLoading}
-						onDelete={() => deleteArticle()}
-						showDeleteButton={!!article}
-						onClose={() => onClose()}
-					/>
+				<DrawerHeader
+					onSave={() => submitFinalForm()}
+					isLoading={isLoading}
+					onDelete={() => deleteArticle()}
+					showDeleteButton={!!article}
+					onClose={() => onClose()}
+				/>
 
-					<Form
-						onSubmit={onSubmit}
-						initialValues={{
-							name: article?.name,
-							amountInStock: article?.amountInStock,
-						}}
-						render={({ handleSubmit }) => (
-							<form
-								onSubmit={handleSubmit}
-								className="article-form"
-							>
-								<div className="form-title">Article</div>
-								<div>
-									<label>Name</label>
-									<Field
-										name="name"
-										type="text"
-										component="input"
-										placeholder="Name"
-									/>
-								</div>
+				<Form
+					onSubmit={onSubmit}
+					initialValues={{
+						name: article?.name,
+						amountInStock: article?.amountInStock,
+					}}
+					render={({ handleSubmit }) => (
+						<form onSubmit={handleSubmit} className="article-form">
+							<div className="form-title">Article</div>
+							<div>
+								<label>Name</label>
+								<Field
+									name="name"
+									type="text"
+									component="input"
+									placeholder="Name"
+								/>
+							</div>
 
-								<div>
-									<label>Amount in stock</label>
-									<Field
-										name="amountInStock"
-										component="input"
-										type="number"
-										placeholder="Amount in stock"
-									/>
-								</div>
-							</form>
-						)}
-					/>
-				</div>
+							<div>
+								<label>Amount in stock</label>
+								<Field
+									name="amountInStock"
+									component="input"
+									type="number"
+									placeholder="Amount in stock"
+								/>
+							</div>
+						</form>
+					)}
+				/>
 			</Drawer>
 		</>
 	);
