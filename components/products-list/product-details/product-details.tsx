@@ -213,7 +213,7 @@ const ProductDetails: FC<{
 					onClose();
 				}}
 				width={isMobile ? '100vw' : '70vw'}
-				height={'100vh'}
+				height={isMobile ? '95vh' : '100vh'}
 				handler={false}
 				className="drawer1"
 			>
