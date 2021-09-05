@@ -138,7 +138,7 @@ const ArticleDetails: FC<{
 					onClose();
 				}}
 				width={isMobile ? '100vw' : '70vw'}
-				height={'100vh'}
+				height={isMobile ? '70vh' : '100vh'}
 				handler={false}
 			>
 				<div className={styles['drawer-container']}>
