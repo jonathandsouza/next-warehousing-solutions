@@ -123,7 +123,14 @@ export const NavBar = () => {
 
 				<div
 					className={styles['desktop-avatar'] + ' ' + 'hidden-mobile'}
-				></div>
+				>
+					<Image
+						src="/avatar.svg"
+						width={100}
+						height={100}
+						alt="avatar"
+					/>
+				</div>
 			</nav>
 
 			{isMobile && (
@@ -137,7 +144,14 @@ export const NavBar = () => {
 					className="drawer1"
 				>
 					<div className={styles['avatar-container']}>
-						<div className={styles['avatar']}></div>
+						<div className={styles['avatar']}>
+							<Image
+								src="/avatar.svg"
+								width={300}
+								height={300}
+								alt="avatar"
+							/>
+						</div>
 					</div>
 
 					<div className={styles['mobile-menu']}>

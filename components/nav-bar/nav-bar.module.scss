@@ -98,7 +98,7 @@
 .desktop-avatar {
 	width: 60px;
 	height: 60px;
-	background: $color-brand-secondary-light;
+	background: lighten($color-brand-primary-main, 30%);
 	padding: 10px;
 	margin-top: 5px;
 	border-radius: 100%;
