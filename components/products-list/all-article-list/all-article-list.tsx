@@ -65,7 +65,7 @@ export const AllArticleList: FC<{
 			placement="right"
 			levelMove={100}
 			width={isMobile ? '100vw' : '70vw'}
-			height={isMobile ? '90vh' : '100vh'}
+			height={isMobile ? '85vh' : '100vh'}
 		>
 			<>
 				<DrawerHeader
