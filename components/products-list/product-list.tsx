@@ -4,6 +4,7 @@ import { IProduct } from '../../models/products';
 import LoaderContext from '../../services/loader';
 import ProductService from '../../services/products';
 import ToastService from '../../services/toast';
+import { SortAlphabetically } from '../../services/utilities';
 import ActionButtonList from '../action-button-list/action-button-list';
 import { FailedToFetch } from '../failed-to-fetch/failed-to-fetch';
 import { GridPlaceholderCard, GridView } from '../grid-view/grid-view';
@@ -37,8 +38,11 @@ const ProductList = () => {
 
 			.then(
 				(products) => {
-					setProducts(products);
-					setOriginalProductsList(products);
+					const sortedProducts = products.sort(
+						SortAlphabetically('name')
+					);
+					setProducts(sortedProducts);
+					setOriginalProductsList(sortedProducts);
 					setFailedToFetch(false);
 				},
 				() => {

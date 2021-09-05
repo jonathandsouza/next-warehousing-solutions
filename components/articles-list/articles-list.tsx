@@ -10,6 +10,7 @@ import styles from './articles-list.module.scss';
 import { FailedToFetch } from '../failed-to-fetch/failed-to-fetch';
 import ToastService from '../../services/toast';
 import ActionButtonList from '../action-button-list/action-button-list';
+import { SortAlphabetically } from '../../services/utilities';
 
 const ArticlesList = () => {
 	const [originalArticlesList, setOriginalArticlesList] =
@@ -31,8 +32,11 @@ const ArticlesList = () => {
 		})
 			.then(
 				(articles) => {
-					setArticles(articles);
-					setOriginalArticlesList(articles);
+					const sortedArticles = articles.sort(
+						SortAlphabetically('name')
+					);
+					setArticles(sortedArticles);
+					setOriginalArticlesList(sortedArticles);
 					setFailedToFetch(false);
 				},
 				() => {

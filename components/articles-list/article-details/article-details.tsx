@@ -90,7 +90,11 @@ const ArticleDetails: FC<{
 	const deleteArticle = () => {
 		if (article) {
 			setIsLoading(true);
-			ToastService.promise(ArticleService.removeArticleById(article.id))
+			ToastService.promise(ArticleService.removeArticleById(article.id), {
+				error: 'Failed to delete article 🤯',
+				success: 'Article deleted successfully 👌',
+				pending: 'Deleting article ⏳',
+			})
 				.then(() => {
 					onDelete(article);
 					onClose();
