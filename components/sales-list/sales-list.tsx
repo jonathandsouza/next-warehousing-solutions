@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import ISale from '../../models/sales';
 import LoaderContext from '../../services/loader';
 import SalesService from '../../services/sales';
+import ToastService from '../../services/toast';
 import { FailedToFetch } from '../failed-to-fetch/failed-to-fetch';
-import { GridView } from '../grid-view/grid-view';
+import { GridPlaceholderCard, GridView } from '../grid-view/grid-view';
 import { Toolbar } from '../tool-bar/tool-bar.';
 import SaleCard from './sale-card/sale-card';
 import SaleDetails from './sale-details/sale-details';
@@ -17,14 +18,21 @@ const SalesList = () => {
 	const [showDrawer, setShowDrawer] = useState<boolean>(false);
 	const [activeSale, setActiveSale] = useState<ISale | null>(null);
 	const [failedToFetch, setFailedToFetch] = useState(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const searchString = useRef<string>('');
 
 	const loader = useContext(LoaderContext);
 
 	const fetchSale = () => {
-		loader.showLoader();
-		SalesService.getAllSales()
+		setIsLoading(true);
+
+		ToastService.promise<Array<ISale>>(SalesService.getAllSales(), {
+			error: 'Failed to fetch sales',
+			pending: 'Fetching sales',
+			success: 'Sales fetched successfully',
+		})
+
 			.then(
 				(sales) => {
 					setSale(sales);
@@ -38,7 +46,7 @@ const SalesList = () => {
 				}
 			)
 			.finally(() => {
-				loader.hideLoader();
+				setIsLoading(false);
 			});
 	};
 
@@ -64,10 +72,6 @@ const SalesList = () => {
 
 	return (
 		<>
-			<Toolbar
-				onSearch={(str) => (str.length ? search(str) : search())}
-			/>
-
 			<div className={styles['button-list']}>
 				<button
 					className="btn-primary"
@@ -75,6 +79,7 @@ const SalesList = () => {
 						setActiveSale(null);
 						setShowDrawer(true);
 					}}
+					disabled={isLoading}
 				>
 					Add Sale
 				</button>
@@ -84,10 +89,22 @@ const SalesList = () => {
 					onClick={() => {
 						fetchSale();
 					}}
+					disabled={isLoading}
 				>
 					Reload
 				</button>
 			</div>
+
+			{isLoading && (
+				<>
+					<GridView
+						card={({ content }: { content: ISale }) => (
+							<GridPlaceholderCard />
+						)}
+						contents={Array.from(Array(10), () => ({}))}
+					/>
+				</>
+			)}
 
 			{failedToFetch && <FailedToFetch onRefetchClick={fetchSale} />}
 

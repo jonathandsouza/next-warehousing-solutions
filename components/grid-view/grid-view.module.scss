@@ -55,3 +55,9 @@
 	opacity: 0.9;
 	z-index: 10;
 }
+
+.grid-placeholder-card {
+	width: 250px;
+	height: 330px;
+	background: lighten($color-brand-primary-light, 30%);
+}

@@ -13,3 +13,8 @@ button.btn-primary {
 
 	border-bottom: 5px solid darken(#9500ae, 10%);
 }
+
+button:disabled {
+	opacity: 0.5;
+	background: lighten(#9500ae, 10%);
+}

@@ -5,10 +5,16 @@ import ISale from '../../models/sales';
 import viewport from '../../services/viewport';
 import styles from './grid-view.module.scss';
 
+export const GridPlaceholderCard = () => (
+	<div className={styles['grid-placeholder-card']}></div>
+);
+
 export const GridView: FC<{
 	card: (content: any) => JSX.Element;
-	contents: Array<IArticle | IProduct | ISale>;
+	contents: Array<IArticle | IProduct | ISale | any>;
 }> = ({ contents, card }) => {
+	card = card || GridPlaceholderCard;
+
 	useEffect(() => {
 		if (viewport.getViewport().isDesktop) {
 			const tiles = document.querySelectorAll('.tile');
@@ -38,16 +44,17 @@ export const GridView: FC<{
 
 	return (
 		<div className={styles['row']}>
-			{contents.map((e, index) => {
-				return (
-					<div key={index} className={'tile ' + styles['tile']}>
-						{card({ content: e })}
-						<div className={styles['overlay']}>
+			{card &&
+				contents.map((e, index) => {
+					return (
+						<div key={index} className={'tile ' + styles['tile']}>
 							{card({ content: e })}
+							<div className={styles['overlay']}>
+								{card({ content: e })}
+							</div>
 						</div>
-					</div>
-				);
-			})}
+					);
+				})}
 		</div>
 	);
 };
