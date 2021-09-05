@@ -1,6 +1,6 @@
 import Drawer from 'rc-drawer';
 import React, { FC, useEffect, useState } from 'react';
-import { IProduct } from '../../../models/products';
+import { ISaleProduct } from '../../../models/sales';
 import ProductService from '../../../services/products';
 import ToastService from '../../../services/toast';
 import viewport from '../../../services/viewport';
@@ -10,28 +10,30 @@ import { FailedToFetch } from '../../failed-to-fetch/failed-to-fetch';
 import styles from './all-products-list.module.scss';
 
 export const AllProductList: FC<{
-	addToSaleProducts: (articleList: IProduct) => void;
-	filterProductsByIds?: Array<string>;
+	addToSaleProducts: (articleList: ISaleProduct) => void;
+	filterProductsByIds: Array<string>;
 }> = ({ addToSaleProducts, filterProductsByIds = [] }) => {
 	const { isMobile } = viewport.getViewport();
+
 	const [isLoading, setIsLoading] = useState(false);
 	const [isOpen, setIsOpen] = useState(true);
-	const [products, setProducts] = useState<Array<IProduct>>([]);
-
+	const [products, setProducts] = useState<Array<ISaleProduct>>([]);
 	const [failedToFetchSaleProducts, setFailedToFetchSaleProducts] =
 		useState<boolean>(false);
-
 	const [checkList, setCheckList] = useState<{ [key: string]: boolean }>({});
 
 	const fetchAllProductsList = () => {
 		setIsLoading(true);
 		setFailedToFetchSaleProducts(false);
 
-		ToastService.promise<Array<IProduct>>(ProductService.getAllProducts(), {
-			pending: 'Fetching products',
-			error: 'Failed to fetch products',
-			success: 'Fetched products',
-		})
+		ToastService.promise<Array<ISaleProduct>>(
+			ProductService.getAllProducts(),
+			{
+				pending: 'Fetching products',
+				error: 'Failed to fetch products',
+				success: 'Fetched products',
+			}
+		)
 			.then(
 				(products) => {
 					setProducts(
@@ -71,9 +73,10 @@ export const AllProductList: FC<{
 					onClose={() => setIsOpen(false)}
 					onDelete={() => {}}
 					onSave={() => {
-						addToSaleProducts(
-							products.filter((article) => checkList[article.id])
+						const product = products.find(
+							(product) => checkList[product.id]
 						);
+						product && addToSaleProducts(product);
 					}}
 					showDeleteButton={false}
 					disableSaveButton={Object.keys(checkList).length === 0}
@@ -87,22 +90,22 @@ export const AllProductList: FC<{
 							<th>Name</th>
 						</thead>
 						<tbody>
-							{products.map((article) => {
+							{products.map((product) => {
 								return (
-									<tr key={article.id}>
+									<tr key={product.id}>
 										<td className="checkbox-container">
 											<input
 												checked={
-													!!checkList[article.id]
+													!!checkList[product.id]
 												}
-												type="checkbox"
-												name="article"
-												id="article"
+												type="radio"
+												name="product"
+												id={'article' + product.id}
 												onChange={(e) => {
 													setCheckList({
 														...checkList,
 														...{
-															[article.id]:
+															[product.id]:
 																e.target
 																	.checked,
 														},
@@ -110,8 +113,8 @@ export const AllProductList: FC<{
 												}}
 											/>
 										</td>
-										<td>{article.id}</td>
-										<td>{article.name}</td>
+										<td>{product.id}</td>
+										<td>{product.name}</td>
 									</tr>
 								);
 							})}

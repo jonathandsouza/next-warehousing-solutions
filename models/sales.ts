@@ -1,17 +1,18 @@
 import { IProduct } from './products';
 
+export type ISaleProduct = {
+	amountSold: number;
+} & IProduct;
 interface ISale {
 	id: string;
 	createdAt: Date;
-	productId: string;
-	amountSold: number;
-	productDetails?: IProduct;
+	product: ISaleProduct;
 }
 
 export interface ISaleService {
 	getAllSales(): Promise<Array<ISale>>;
 	createSale(
-		sale: Pick<ISale, 'productId' | 'amountSold' | 'createdAt'>
+		product: Pick<ISaleProduct, 'id' | 'amountSold'>
 	): Promise<ISale>;
 	getSaleById(id: string): Promise<ISale>;
 	updateSale(sale: ISale): Promise<boolean>;

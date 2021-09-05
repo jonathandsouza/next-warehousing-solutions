@@ -11,7 +11,7 @@ import styles from './sale-details.module.scss';
 import ProductService from '../../../services/products';
 import { FailedToFetch } from '../../failed-to-fetch/failed-to-fetch';
 import { DrawerHeader } from '../../drawer/drawer-header/drawer-header';
-import ISale from '../../../models/sales';
+import ISale, { ISaleProduct } from '../../../models/sales';
 import SalesService from '../../../services/sales';
 import { IProduct } from '../../../models/products';
 import SaleProductListItem from '../sale-product-list-item/sale-product-list-item';
@@ -27,7 +27,9 @@ const SaleDetails: FC<{
 	// region state
 	const [isOpen, setIsOpen] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
-	const [linkedProduct, setLinkedProduct] = useState<IProduct | null>(null);
+	const [linkedProduct, setLinkedProduct] = useState<ISaleProduct | null>(
+		null
+	);
 	const [productsAreLoading, setProductsAreLoading] =
 		useState<boolean>(false);
 	const [failedToFetchSaleProducts, setFailedToFetchSaleProducts] =
@@ -38,34 +40,35 @@ const SaleDetails: FC<{
 	// endregion
 
 	// region Add Sale
-	const AddSale = (value: any) => {
+	const AddSale = () => {
 		setIsLoading(true);
-		ToastService.promise<ISale>(
-			SalesService.createSale({
-				productId: value.saleId,
-				amountSold: value.amountSold,
-				createdAt: new Date(),
-			})
-		)
-			.then((sale) => {
-				onAdd(sale);
-				onClose();
-			})
-			.finally(() => {
-				setIsLoading(false);
-			});
+
+		if (linkedProduct) {
+			ToastService.promise<ISale>(
+				SalesService.createSale({
+					id: linkedProduct.id,
+					amountSold: linkedProduct.amountSold,
+				})
+			)
+				.then((sale) => {
+					onAdd(sale);
+					onClose();
+				})
+				.finally(() => {
+					setIsLoading(false);
+				});
+		}
 	};
 	// endregion
 
 	// region Update Sale
-	const updateSale = (value: any) => {
+	const updateSale = () => {
 		setIsLoading(true);
-		if (sale) {
+		if (sale && linkedProduct) {
 			ToastService.promise(
 				SalesService.updateSale({
 					id: sale.id,
-					productId: value.productId,
-					amountSold: value.amountSold,
+					product: linkedProduct,
 					createdAt: new Date(),
 				}),
 				{
@@ -80,9 +83,8 @@ const SaleDetails: FC<{
 						onUpdate({
 							...sale,
 							...{
-								name: value.name,
+								product: linkedProduct,
 							},
-							...linkedProduct,
 						});
 						onClose();
 					});
@@ -115,18 +117,18 @@ const SaleDetails: FC<{
 
 	// region update Product amount required
 	const updatedAmountSold: (value: number) => void = (value) => {
-		if (sale) {
-			sale.amountSold = value;
+		if (linkedProduct) {
+			linkedProduct.amountSold = value;
 		}
 	};
 	//endregion
 
 	// region submit form
-	const onSubmit = (value: { name: string; amountInStock: string }) => {
+	const onSubmit = () => {
 		if (sale) {
-			updateSale(value);
+			updateSale();
 		} else {
-			AddSale(value);
+			AddSale();
 		}
 	};
 
@@ -148,7 +150,7 @@ const SaleDetails: FC<{
 			setFailedToFetchSaleProducts(false);
 
 			ToastService.promise<IProduct>(
-				ProductService.getProductById(sale.productId),
+				ProductService.getProductById(sale.product.id),
 				{
 					pending: 'Fetching article list',
 					error: 'Failed to fetch article list',
@@ -157,7 +159,7 @@ const SaleDetails: FC<{
 			)
 				.then(
 					(product) => {
-						setLinkedProduct(product);
+						setLinkedProduct({ ...sale.product, ...product });
 						setFailedToFetchSaleProducts(false);
 					},
 					() => {
@@ -179,87 +181,107 @@ const SaleDetails: FC<{
 	const { isMobile } = viewport.getViewport();
 
 	return (
-		<>
-			<Drawer
-				open={isOpen}
-				level={null}
-				placement={isMobile ? 'bottom' : 'right'}
-				onClose={() => {
-					setIsOpen(false);
-					onClose();
-				}}
-				width={isMobile ? '100vw' : '70vw'}
-				height={'100vh'}
-				handler={false}
-				className="drawer1"
-			>
-				<>
-					<div className={DrawerStyles['drawer-container']}>
-						<DrawerHeader
-							onSave={() => submitFinalForm()}
-							isLoading={isLoading}
-							onDelete={() => deleteSale()}
-							showDeleteButton={!!sale}
-							onClose={() => onClose()}
-						/>
+		<Drawer
+			open={isOpen}
+			level={null}
+			placement={isMobile ? 'bottom' : 'right'}
+			onClose={() => {
+				setIsOpen(false);
+				onClose();
+			}}
+			width={isMobile ? '100vw' : '70vw'}
+			height={'100vh'}
+			handler={false}
+			className="drawer1"
+		>
+			<>
+				<div className={DrawerStyles['drawer-container']}>
+					<DrawerHeader
+						onSave={() => onSubmit()}
+						isLoading={isLoading}
+						onDelete={() => deleteSale()}
+						showDeleteButton={!!sale}
+						onClose={() => onClose()}
+					/>
 
+					{sale && (
 						<div
 							className={
 								styles['products-list'] + ' form-container'
 							}
 						>
-							<div className="form-title">
-								Products list
-								<div
-									className={styles.add}
-									onClick={() =>
-										setShowAllProductsDrawer(true)
-									}
-								>
-									<Image
-										className={styles.remove}
-										src="/add.svg"
-										alt=""
-										width={30}
-										height={30}
-									/>
-								</div>
+							<div className="form-title">Sale Details</div>
+
+							<div className="name label-text">
+								<span className={styles['product-title']}>
+									id:&nbsp;
+								</span>
+								<span className={styles['product-value']}>
+									{sale.id}
+								</span>
 							</div>
 
-							{linkedProduct && (
-								<SaleProductListItem
-									amountSold={sale ? sale.amountSold : 0}
-									product={linkedProduct}
-									onAmountSoldChanged={(amount) =>
-										updatedAmountSold(amount)
-									}
-									onRemove={(product) => {}}
-									showRemoveIcon={false}
+							<div className="name label-text">
+								<span className={styles['product-title']}>
+									Created on:&nbsp;
+								</span>
+								<span className={styles['product-value']}>
+									{sale.createdAt.toDateString()}
+								</span>
+							</div>
+						</div>
+					)}
+
+					<div
+						className={styles['products-list'] + ' form-container'}
+					>
+						<div className="form-title">
+							Products list
+							<div
+								className={styles.add}
+								onClick={() => setShowAllProductsDrawer(true)}
+							>
+								<Image
+									className={styles.remove}
+									src="/add.svg"
+									alt=""
+									width={30}
+									height={30}
 								/>
-							)}
+							</div>
 						</div>
 
-						{failedToFetchSaleProducts && (
-							<FailedToFetch
-								onRefetchClick={() => fetchSaleProductsList()}
+						{linkedProduct && (
+							<SaleProductListItem
+								amountSold={sale ? sale.product.amountSold : 0}
+								product={linkedProduct}
+								onAmountSoldChanged={(amount) =>
+									updatedAmountSold(amount)
+								}
+								onRemove={(product) => {}}
+								showRemoveIcon={false}
 							/>
 						)}
 					</div>
 
-					{showAllProductsDrawer && (
-						<AllProductList
-							filterProductsByIds={
-								linkedProduct ? [linkedProduct.id] : []
-							}
-							addToSaleProducts={(product) => {
-								setLinkedProduct(product);
-								setShowAllProductsDrawer(false);
-							}}
+					{failedToFetchSaleProducts && (
+						<FailedToFetch
+							onRefetchClick={() => fetchSaleProductsList()}
 						/>
 					)}
-				</>
-			</Drawer>
-		</>
+				</div>
+
+				{showAllProductsDrawer && (
+					<AllProductList
+						filterProductsByIds={[]}
+						addToSaleProducts={(product) => {
+							setLinkedProduct(product);
+							setShowAllProductsDrawer(false);
+						}}
+					/>
+				)}
+			</>
+		</Drawer>
 	);
 };
 

@@ -14,27 +14,8 @@ export enum DATE_FORMAT {
 	D_MMM = 12,
 }
 
-export interface IDateTimeService {
-	dayNames: string[]
-	monthNames: string[]
-	convertToDateObj: (dateStr: string, type?: number) => Date
-	differenceInDays: (d1: Date, d2: Date) => number
-	formatDate: (
-		d1: Date,
-		format: DATE_FORMAT,
-		options?: { isMonthLowercase?: boolean; isDayLowercase?: boolean }
-	) => string | null
-	mysqlStrToDate: (d: string) => Date
-	addDays: (d: Date, days: number) => Date
-	cloneDate: (
-		d: Date,
-		options?: {
-			year?: number
-			month?: number
-			day?: number
-			hour?: number
-			minute?: number
-		}
-	) => Date
-	isPastDate: (d: Date) => boolean
+interface IDateTimeService {
+	mysqlStrToDate: (d: string) => Date;
 }
+
+export default IDateTimeService;

@@ -16,16 +16,18 @@ const SaleCard: FC<{
 			<div className={styles['overviewInfo']}>
 				<div className={styles['productinfo']}>
 					<div className={styles['grouptext']}>
-						<h3>ID#</h3>
+						<h3>Sale ID#</h3>
 						<p>{content.id}</p>
 					</div>
 				</div>
 			</div>
 
 			<div className={styles['productSpecifications']}>
-				<h1>{content.amountSold}</h1>
 				<p className={styles['title']}>
-					CreatedOn:&nbsp;{content.createdAt}
+					Product ID:&nbsp;{content.product.id}
+				</p>
+				<p className={styles['title']}>
+					CreatedOn:&nbsp;{content.createdAt.toDateString()}
 				</p>
 			</div>
 		</div>
