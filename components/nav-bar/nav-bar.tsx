@@ -10,6 +10,7 @@ import viewport from '../../services/viewport';
 export const NavBar = () => {
 	const [activePage, setActivePage] = useState<PAGES>(PAGES.ARTICLES);
 	const [isMobile, setIsMobile] = useState(false);
+	const [open, setOpen] = useState(false);
 
 	const router = useRouter();
 
@@ -24,6 +25,7 @@ export const NavBar = () => {
 			} else {
 				setActivePage(PAGES.ARTICLES);
 			}
+			setOpen(false);
 		};
 
 		router.events.on('routeChangeStart', handleRouteChange);
@@ -119,12 +121,16 @@ export const NavBar = () => {
 					</li>
 				</ul>
 
-				<div className={styles['desktop-avatar']}></div>
+				<div
+					className={styles['desktop-avatar'] + ' ' + 'hidden-mobile'}
+				></div>
 			</nav>
 
 			{isMobile && (
 				<Drawer
 					level={null}
+					open={open}
+					onHandleClick={() => setOpen(!open)}
 					placement={'left'}
 					width={'80vw'}
 					height={'100vh'}

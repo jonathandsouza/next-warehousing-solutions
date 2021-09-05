@@ -4,6 +4,7 @@ import { IProduct } from '../../models/products';
 import LoaderContext from '../../services/loader';
 import ProductService from '../../services/products';
 import ToastService from '../../services/toast';
+import ActionButtonList from '../action-button-list/action-button-list';
 import { FailedToFetch } from '../failed-to-fetch/failed-to-fetch';
 import { GridPlaceholderCard, GridView } from '../grid-view/grid-view';
 import { Toolbar } from '../tool-bar/tool-bar.';
@@ -76,28 +77,17 @@ const ProductList = () => {
 
 	return (
 		<>
-			<div className={styles['button-list']}>
-				<button
-					className="btn-primary"
-					onClick={() => {
-						setActiveProduct(null);
-						setShowDrawer(true);
-					}}
-					disabled={isLoading}
-				>
-					Add Product
-				</button>
-
-				<button
-					className="btn-primary"
-					onClick={() => {
-						fetchProducts();
-					}}
-					disabled={isLoading}
-				>
-					Reload
-				</button>
-			</div>
+			<ActionButtonList
+				onAddClick={() => {
+					setActiveProduct(null);
+					setShowDrawer(true);
+				}}
+				disabled={isLoading}
+				onReloadClick={() => {
+					fetchProducts();
+				}}
+				addText="Add Product"
+			/>
 
 			{isLoading && (
 				<>

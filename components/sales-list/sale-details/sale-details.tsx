@@ -41,6 +41,11 @@ const SaleDetails: FC<{
 
 	// region Add Sale
 	const AddSale = () => {
+		if (linkedProduct && linkedProduct.amountSold === 0) {
+			ToastService.error(<h1>error now</h1>);
+			return;
+		}
+
 		setIsLoading(true);
 
 		if (linkedProduct) {
@@ -202,6 +207,7 @@ const SaleDetails: FC<{
 						onDelete={() => deleteSale()}
 						showDeleteButton={!!sale}
 						onClose={() => onClose()}
+						disableSaveButton={!linkedProduct}
 					/>
 
 					{sale && (

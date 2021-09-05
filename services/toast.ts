@@ -12,7 +12,7 @@ const ToastService: IToastService = {
 			},
 			{
 				position: 'bottom-left',
-				autoClose: 5000,
+				autoClose: 2000,
 				hideProgressBar: false,
 				closeOnClick: true,
 				pauseOnHover: true,
@@ -21,6 +21,10 @@ const ToastService: IToastService = {
 		);
 
 		return promise;
+	},
+
+	error(message) {
+		toast.error(message);
 	},
 };
 

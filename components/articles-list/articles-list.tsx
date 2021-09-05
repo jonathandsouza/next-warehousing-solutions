@@ -4,12 +4,12 @@ import ArticleService from '../../services/articles';
 import LoaderContext from '../../services/loader';
 import ArticleDetails from './article-details/article-details';
 import { GridPlaceholderCard, GridView } from '../grid-view/grid-view';
-import { Toolbar } from '../tool-bar/tool-bar.';
 import { ArticleCard } from './article-card/article-card';
 
 import styles from './articles-list.module.scss';
 import { FailedToFetch } from '../failed-to-fetch/failed-to-fetch';
 import ToastService from '../../services/toast';
+import ActionButtonList from '../action-button-list/action-button-list';
 
 const ArticlesList = () => {
 	const [originalArticlesList, setOriginalArticlesList] =
@@ -71,30 +71,17 @@ const ArticlesList = () => {
 
 	return (
 		<>
-			{/* <Toolbar onSearch={search} /> */}
-
-			<div className={styles['button-list']}>
-				<button
-					className="btn-primary"
-					onClick={() => {
-						setActiveArticle(null);
-						setShowDrawer(true);
-					}}
-					disabled={isLoading}
-				>
-					Add Article
-				</button>
-
-				<button
-					className="btn-primary"
-					onClick={() => {
-						fetchArticles();
-					}}
-					disabled={isLoading}
-				>
-					Reload
-				</button>
-			</div>
+			<ActionButtonList
+				onAddClick={() => {
+					setActiveArticle(null);
+					setShowDrawer(true);
+				}}
+				disabled={isLoading}
+				onReloadClick={() => {
+					fetchArticles();
+				}}
+				addText="Add Article"
+			/>
 
 			{isLoading && (
 				<>

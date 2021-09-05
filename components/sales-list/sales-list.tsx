@@ -3,6 +3,7 @@ import ISale from '../../models/sales';
 import LoaderContext from '../../services/loader';
 import SalesService from '../../services/sales';
 import ToastService from '../../services/toast';
+import ActionButtonList from '../action-button-list/action-button-list';
 import { FailedToFetch } from '../failed-to-fetch/failed-to-fetch';
 import { GridPlaceholderCard, GridView } from '../grid-view/grid-view';
 import { Toolbar } from '../tool-bar/tool-bar.';
@@ -72,28 +73,17 @@ const SalesList = () => {
 
 	return (
 		<>
-			<div className={styles['button-list']}>
-				<button
-					className="btn-primary"
-					onClick={() => {
-						setActiveSale(null);
-						setShowDrawer(true);
-					}}
-					disabled={isLoading}
-				>
-					Add Sale
-				</button>
-
-				<button
-					className="btn-primary"
-					onClick={() => {
-						fetchSale();
-					}}
-					disabled={isLoading}
-				>
-					Reload
-				</button>
-			</div>
+			<ActionButtonList
+				onAddClick={() => {
+					setActiveSale(null);
+					setShowDrawer(true);
+				}}
+				disabled={isLoading}
+				onReloadClick={() => {
+					fetchSale();
+				}}
+				addText="Add Sale"
+			/>
 
 			{isLoading && (
 				<>

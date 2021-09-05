@@ -7,6 +7,8 @@ interface IToastService {
 			error: string;
 		}
 	) => Promise<T>;
+
+	error: (message: React.ReactNode) => void;
 }
 
 export default IToastService;
