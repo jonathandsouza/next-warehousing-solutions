@@ -29,9 +29,9 @@ const ProductList = () => {
 		setIsLoading(true);
 
 		ToastService.promise<Array<IProduct>>(ProductService.getAllProducts(), {
-			error: 'Failed to fetch products',
-			pending: 'Fetching products',
-			success: 'Products fetched successfully',
+			error: 'Failed to fetch products 🤯',
+			pending: 'Fetching products ⏳',
+			success: 'Products fetched successfully 👌',
 		})
 
 			.then(
@@ -112,18 +112,20 @@ const ProductList = () => {
 
 			{failedToFetch && <FailedToFetch onRefetchClick={fetchProducts} />}
 
-			<GridView
-				card={({ content }: { content: IProduct }) => (
-					<ProductCard
-						content={content}
-						onSelect={(product) => {
-							setActiveProduct(product);
-							setShowDrawer(true);
-						}}
-					/>
-				)}
-				contents={products || []}
-			/>
+			{!isLoading && products && products.length > 0 && (
+				<GridView
+					card={({ content }: { content: IProduct }) => (
+						<ProductCard
+							content={content}
+							onSelect={(product) => {
+								setActiveProduct(product);
+								setShowDrawer(true);
+							}}
+						/>
+					)}
+					contents={products || []}
+				/>
+			)}
 
 			{showDrawer && (
 				<div style={{ zIndex: 100 }}>

@@ -72,9 +72,9 @@ const SaleDetails: FC<{
 					createdAt: new Date(),
 				}),
 				{
-					pending: 'Updating sale',
-					error: 'Failed to update sale',
-					success: 'Save successful',
+					pending: 'Updating sale ⏳',
+					error: 'Failed to update sale 🤯',
+					success: 'Save successful 👌',
 				}
 			).then(
 				() => {
@@ -152,9 +152,9 @@ const SaleDetails: FC<{
 			ToastService.promise<IProduct>(
 				ProductService.getProductById(sale.product.id),
 				{
-					pending: 'Fetching article list',
-					error: 'Failed to fetch article list',
-					success: 'Products fetched successfully',
+					pending: 'Fetching article list ⏳',
+					error: 'Failed to fetch article list 🤯',
+					success: 'Products fetched successfully 👌',
 				}
 			)
 				.then(

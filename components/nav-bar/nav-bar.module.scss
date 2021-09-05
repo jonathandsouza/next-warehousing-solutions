@@ -42,6 +42,7 @@
 		list-style: none;
 		padding: 0;
 		margin: 0px;
+		flex-grow: 1;
 
 		li {
 			padding: 1rem;
@@ -62,4 +63,44 @@
 			}
 		}
 	}
+}
+
+.mobile-menu-item {
+	text-align: center;
+	border-bottom: 1px solid #f1f1f1;
+	padding: 20px;
+
+	.active {
+		color: red;
+	}
+}
+
+.active-mobile-menu-item {
+	background: $color-brand-secondary-light;
+	color: white;
+	font-weight: bold;
+}
+
+.avatar-container {
+	background: #cccccc;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.avatar {
+	border-radius: 100%;
+	height: 150px;
+	width: 150px;
+	background: lighten($color-brand-primary-main, 30%);
+	margin: auto;
+}
+
+.desktop-avatar {
+	width: 60px;
+	height: 60px;
+	background: $color-brand-secondary-light;
+	padding: 10px;
+	margin-top: 5px;
+	border-radius: 100%;
+	margin-right: 10px;
 }

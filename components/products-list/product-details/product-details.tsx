@@ -72,9 +72,9 @@ const ProductDetails: FC<{
 					articles: linkedArticles,
 				}),
 				{
-					pending: 'Updating product',
-					error: 'Failed to update product',
-					success: 'Save successful',
+					pending: 'Updating product ⏳',
+					error: 'Failed to update product 🤯',
+					success: 'Save successful 👌',
 				}
 			).then(
 				() => {
@@ -165,9 +165,9 @@ const ProductDetails: FC<{
 					product?.articles.map((e) => e.id)
 				),
 				{
-					pending: 'Fetching article list',
-					error: 'Failed to fetch article list',
-					success: 'Articles fetched successfully',
+					pending: 'Fetching article list ⏳',
+					error: 'Failed to fetch article list 🤯',
+					success: 'Articles fetched successfully 👌',
 				}
 			)
 				.then(

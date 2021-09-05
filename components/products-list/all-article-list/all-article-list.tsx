@@ -29,9 +29,9 @@ export const AllArticleList: FC<{
 		setFailedToFetchProductArticles(false);
 
 		ToastService.promise<Array<IArticle>>(ArticleService.getAllArticles(), {
-			pending: 'Fetching articles',
-			error: 'Failed to fetch articles',
-			success: 'Fetched articles',
+			pending: 'Fetching articles ⏳',
+			error: 'Failed to fetch articles 🤯',
+			success: 'Fetched articles 👌',
 		})
 			.then(
 				(articles) => {
