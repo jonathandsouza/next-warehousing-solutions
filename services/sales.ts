@@ -30,10 +30,9 @@ const SalesService: ISaleService = {
 	},
 
 	updateSale(sales) {
-		return fetchPATCH(
-			environment.getEndPointURL() + 'sales/' + sales.id,
-			sales
-		);
+		return fetchPATCH(environment.getEndPointURL() + 'sales/' + sales.id, {
+			amountSold: sales.product.amountSold,
+		});
 	},
 
 	createSale(product) {

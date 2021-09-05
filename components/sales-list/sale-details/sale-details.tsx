@@ -238,18 +238,20 @@ const SaleDetails: FC<{
 				<div className={styles['products-list'] + ' form-container'}>
 					<div className="form-title">
 						Products list
-						<div
-							className={styles.add}
-							onClick={() => setShowAllProductsDrawer(true)}
-						>
-							<Image
-								className={styles.remove}
-								src="/add.svg"
-								alt=""
-								width={30}
-								height={30}
-							/>
-						</div>
+						{!sale && (
+							<div
+								className={styles.add}
+								onClick={() => setShowAllProductsDrawer(true)}
+							>
+								<Image
+									className={styles.remove}
+									src="/add.svg"
+									alt=""
+									width={30}
+									height={30}
+								/>
+							</div>
+						)}
 					</div>
 
 					{linkedProduct && (
