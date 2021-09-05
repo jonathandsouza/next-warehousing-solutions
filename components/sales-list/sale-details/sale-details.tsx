@@ -148,8 +148,8 @@ const SaleDetails: FC<{
 			ToastService.promise<IProduct>(
 				ProductService.getProductById(sale.product.id),
 				{
-					pending: 'Fetching article list ⏳',
-					error: 'Failed to fetch article list 🤯',
+					pending: 'Fetching products list ⏳',
+					error: 'Failed to fetch products list 🤯',
 					success: 'Products fetched successfully 👌',
 				}
 			)
