@@ -28,9 +28,9 @@ const SalesList = () => {
 		setIsLoading(true);
 
 		ToastService.promise<Array<ISale>>(SalesService.getAllSales(), {
-			error: 'Failed to fetch sales',
-			pending: 'Fetching sales',
-			success: 'Sales fetched successfully',
+			error: 'Failed to fetch sales 🤯',
+			pending: 'Fetching sales ⏳',
+			success: 'Sales fetched successfully 👌',
 		})
 
 			.then(
@@ -108,18 +108,20 @@ const SalesList = () => {
 
 			{failedToFetch && <FailedToFetch onRefetchClick={fetchSale} />}
 
-			<GridView
-				card={({ content }: { content: ISale }) => (
-					<SaleCard
-						content={content}
-						onSelect={(sale) => {
-							setActiveSale(sale);
-							setShowDrawer(true);
-						}}
-					/>
-				)}
-				contents={sales || []}
-			/>
+			{!isLoading && sales && sales.length > 0 && (
+				<GridView
+					card={({ content }: { content: ISale }) => (
+						<SaleCard
+							content={content}
+							onSelect={(sale) => {
+								setActiveSale(sale);
+								setShowDrawer(true);
+							}}
+						/>
+					)}
+					contents={sales || []}
+				/>
+			)}
 
 			{showDrawer && (
 				<div style={{ zIndex: 100 }}>

@@ -1,4 +1,5 @@
 @import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
 
 .failed-to-fetch-warning {
 	padding: 20px;
@@ -13,6 +14,10 @@
 		display: inline-block;
 		margin-right: 10px;
 	}
+
+	@include bp-lg-mobile-max {
+		text-align: center;
+	}
 }
 
 .fetch-btn {
@@ -25,5 +30,9 @@
 
 	&:hover {
 		background: lighten(#9500ae, 10%);
+	}
+
+	@include bp-lg-mobile-max {
+		margin-top: 10px;
 	}
 }

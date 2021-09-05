@@ -25,9 +25,9 @@ const ArticlesList = () => {
 	const fetchArticles = () => {
 		setIsLoading(true);
 		ToastService.promise<Array<IArticle>>(ArticleService.getAllArticles(), {
-			error: 'Failed to fetch articles',
-			pending: 'Fetching articles',
-			success: 'Articles fetched successfully',
+			error: 'Failed to fetch articles 🤯',
+			pending: 'Fetching articles ⏳',
+			success: 'Articles fetched successfully 👌',
 		})
 			.then(
 				(articles) => {
@@ -109,7 +109,7 @@ const ArticlesList = () => {
 
 			{failedToFetch && <FailedToFetch onRefetchClick={fetchArticles} />}
 
-			{articles && articles.length > 0 && (
+			{!isLoading && articles && articles.length > 0 && (
 				<GridView
 					card={({ content }: { content: IArticle }) => (
 						<ArticleCard

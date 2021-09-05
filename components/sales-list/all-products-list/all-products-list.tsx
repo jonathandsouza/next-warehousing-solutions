@@ -29,9 +29,9 @@ export const AllProductList: FC<{
 		ToastService.promise<Array<ISaleProduct>>(
 			ProductService.getAllProducts(),
 			{
-				pending: 'Fetching products',
-				error: 'Failed to fetch products',
-				success: 'Fetched products',
+				pending: 'Fetching products ⏳',
+				error: 'Failed to fetch products 🤯',
+				success: 'Fetched products 👌',
 			}
 		)
 			.then(
