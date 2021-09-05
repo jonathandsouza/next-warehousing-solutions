@@ -36,7 +36,6 @@ const ProductDetails: FC<{
 		useState<boolean>(false);
 
 	const [showAllArticlesDrawer, setShowAllArticlesDrawer] = useState(false);
-
 	// endregion
 
 	// region Add Product

@@ -3,12 +3,13 @@ import IArticle from '../../models/articles';
 import ArticleService from '../../services/articles';
 import LoaderContext from '../../services/loader';
 import ArticleDetails from './article-details/article-details';
-import { GridView } from '../grid-view/grid-view';
+import { GridPlaceholderCard, GridView } from '../grid-view/grid-view';
 import { Toolbar } from '../tool-bar/tool-bar.';
 import { ArticleCard } from './article-card/article-card';
 
 import styles from './articles-list.module.scss';
 import { FailedToFetch } from '../failed-to-fetch/failed-to-fetch';
+import ToastService from '../../services/toast';
 
 const ArticlesList = () => {
 	const [originalArticlesList, setOriginalArticlesList] =
@@ -17,14 +18,17 @@ const ArticlesList = () => {
 	const [showDrawer, setShowDrawer] = useState<boolean>(false);
 	const [activeArticle, setActiveArticle] = useState<IArticle | null>(null);
 	const [failedToFetch, setFailedToFetch] = useState(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const searchString = useRef<string>('');
 
-	const loader = useContext(LoaderContext);
-
 	const fetchArticles = () => {
-		loader.showLoader();
-		ArticleService.getAllArticles()
+		setIsLoading(true);
+		ToastService.promise<Array<IArticle>>(ArticleService.getAllArticles(), {
+			error: 'Failed to fetch articles',
+			pending: 'Fetching articles',
+			success: 'Articles fetched successfully',
+		})
 			.then(
 				(articles) => {
 					setArticles(articles);
@@ -38,7 +42,7 @@ const ArticlesList = () => {
 				}
 			)
 			.finally(() => {
-				loader.hideLoader();
+				setIsLoading(false);
 			});
 	};
 
@@ -67,7 +71,7 @@ const ArticlesList = () => {
 
 	return (
 		<>
-			<Toolbar onSearch={search} />
+			{/* <Toolbar onSearch={search} /> */}
 
 			<div className={styles['button-list']}>
 				<button
@@ -76,6 +80,7 @@ const ArticlesList = () => {
 						setActiveArticle(null);
 						setShowDrawer(true);
 					}}
+					disabled={isLoading}
 				>
 					Add Article
 				</button>
@@ -85,10 +90,22 @@ const ArticlesList = () => {
 					onClick={() => {
 						fetchArticles();
 					}}
+					disabled={isLoading}
 				>
 					Reload
 				</button>
 			</div>
+
+			{isLoading && (
+				<>
+					<GridView
+						card={({ content }: { content: IArticle }) => (
+							<GridPlaceholderCard />
+						)}
+						contents={Array.from(Array(10), () => ({}))}
+					/>
+				</>
+			)}
 
 			{failedToFetch && <FailedToFetch onRefetchClick={fetchArticles} />}
 
