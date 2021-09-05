@@ -1,9 +1,9 @@
-import IEnvironment from '../models/environment'
+import IEnvironment from '../models/environment';
 
 const environment: IEnvironment = {
 	getEndPointURL() {
-		return 'http://localhost:7000/'
+		return process.env.NEXT_PUBLIC_ENV_HOST || '';
 	},
-}
+};
 
-export default environment
+export default environment;
