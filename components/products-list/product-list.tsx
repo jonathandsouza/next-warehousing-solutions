@@ -10,14 +10,15 @@ import { ProductCard } from './product-card/product-card';
 import ProductDetails from './product-details/product-details';
 
 const ProductList = () => {
+	// region state
 	const [products, setProducts] = useState<Array<IProduct> | null>(null);
 	const [showDrawer, setShowDrawer] = useState<boolean>(false);
 	const [activeProduct, setActiveProduct] = useState<IProduct | null>(null);
 	const [failedToFetch, setFailedToFetch] = useState(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	// endregion
 
-	const searchString = useRef<string>('');
-
+	// region fetch products list
 	const fetchProducts = () => {
 		setIsLoading(true);
 
@@ -44,24 +45,13 @@ const ProductList = () => {
 				setIsLoading(false);
 			});
 	};
+	// endregion
 
+	// region use effect
 	useEffect(() => {
 		fetchProducts();
 	}, []);
-
-	const getFilteredProductList = (list: Array<IProduct> = []) => {
-		return (
-			list.filter(
-				(product) =>
-					product.name
-						.toLowerCase()
-						.indexOf(searchString.current.toLowerCase()) !== -1 ||
-					product.id
-						.toLowerCase()
-						.indexOf(searchString.current.toLowerCase()) !== -1
-			) || []
-		);
-	};
+	// endregion
 
 	return (
 		<>
@@ -123,9 +113,7 @@ const ProductList = () => {
 								);
 
 								productList.push(product);
-								setProducts(
-									getFilteredProductList(productList)
-								);
+								setProducts(productList);
 							}
 						}}
 						onDelete={(product) => {
@@ -134,9 +122,7 @@ const ProductList = () => {
 									(a) => a.id !== product.id
 								);
 
-								setProducts(
-									getFilteredProductList(productList)
-								);
+								setProducts(productList);
 							}
 						}}
 						onClose={() => {

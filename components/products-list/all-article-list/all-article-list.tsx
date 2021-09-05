@@ -14,16 +14,17 @@ export const AllArticleList: FC<{
 	addToProductArticles: (articleList: Array<IArticle>) => void;
 	filterArticlesByIds?: Array<string>;
 }> = ({ addToProductArticles, filterArticlesByIds = [] }) => {
+	// region state
 	const { isMobile } = viewport.getViewport();
 	const [isLoading, setIsLoading] = useState(false);
 	const [isOpen, setIsOpen] = useState(true);
 	const [articles, setArticles] = useState<Array<IArticle>>([]);
-
 	const [failedToFetchProductArticles, setFailedToFetchProductArticles] =
 		useState<boolean>(false);
-
 	const [checkList, setCheckList] = useState<{ [key: string]: boolean }>({});
+	// endregion
 
+	// region fetch all articles list
 	const fetchAllArticlesList = () => {
 		setIsLoading(true);
 		setFailedToFetchProductArticles(false);
@@ -49,11 +50,14 @@ export const AllArticleList: FC<{
 				setIsLoading(false);
 			});
 	};
+	// endregion
 
+	// region use state
 	useEffect(() => {
 		fetchAllArticlesList();
 		// eslint-disable-next-line
 	}, []);
+	//endregion
 
 	return (
 		<Drawer

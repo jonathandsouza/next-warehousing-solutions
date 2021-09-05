@@ -136,14 +136,6 @@ const SaleDetails: FC<{
 		}
 	};
 
-	const submitFinalForm = () => {
-		const forms = document.getElementsByClassName('sale-form');
-		for (const form of forms) {
-			form.dispatchEvent(
-				new Event('submit', { cancelable: true, bubbles: true })
-			);
-		}
-	};
 	//endregion
 
 	//region fetch sale article list
@@ -178,10 +170,12 @@ const SaleDetails: FC<{
 	};
 	// endregion
 
+	// region use effect
 	useEffect(() => {
 		fetchSaleProductsList();
 		// eslint-disable-next-line
 	}, []);
+	// endregion
 
 	const { isMobile } = viewport.getViewport();
 

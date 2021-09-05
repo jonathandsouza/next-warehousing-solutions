@@ -194,10 +194,12 @@ const ProductDetails: FC<{
 	};
 	// endregion
 
+	// region use effect
 	useEffect(() => {
 		fetchProductArticlesList();
 		// eslint-disable-next-line
 	}, []);
+	// endregion
 
 	const { isMobile } = viewport.getViewport();
 

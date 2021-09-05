@@ -1,9 +1,10 @@
 import { FC, useState } from 'react';
 import Image from 'next/image';
 
-import styles from './sale-product-list-item.module.scss';
 import { IProduct } from '../../../models/products';
 import { ISaleProduct } from '../../../models/sales';
+
+import styles from './sale-product-list-item.module.scss';
 
 const SaleProductListItem: FC<{
 	amountSold: number;

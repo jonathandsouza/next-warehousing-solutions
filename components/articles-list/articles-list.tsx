@@ -11,12 +11,15 @@ import ActionButtonList from '../action-button-list/action-button-list';
 import { SortAlphabetically } from '../../services/utilities';
 
 const ArticlesList = () => {
+	// region state
 	const [articles, setArticles] = useState<Array<IArticle> | null>(null);
 	const [showDrawer, setShowDrawer] = useState<boolean>(false);
 	const [activeArticle, setActiveArticle] = useState<IArticle | null>(null);
 	const [failedToFetch, setFailedToFetch] = useState(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	// endregion
 
+	// region code to fetch article details
 	const fetchArticles = () => {
 		setIsLoading(true);
 		ToastService.promise<Array<IArticle>>(ArticleService.getAllArticles(), {
@@ -41,10 +44,13 @@ const ArticlesList = () => {
 				setIsLoading(false);
 			});
 	};
+	//endregion
 
+	// region use effect
 	useEffect(() => {
 		fetchArticles();
 	}, []);
+	//endregion
 
 	return (
 		<>

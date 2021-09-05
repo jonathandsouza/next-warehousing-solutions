@@ -8,14 +8,17 @@ import Drawer from 'rc-drawer';
 import viewport from '../../services/viewport';
 
 export const NavBar = () => {
+	// region state
 	const [activePage, setActivePage] = useState<PAGES>(PAGES.ARTICLES);
 	const [isMobile, setIsMobile] = useState(false);
 	const [open, setOpen] = useState(false);
+	// endregion
 
+	// region router
 	const router = useRouter();
+	// endregion
 
-	router;
-
+	// region use state
 	useEffect(() => {
 		const handleRouteChange = (url: string) => {
 			if (url.indexOf('products') !== -1) {
@@ -40,6 +43,7 @@ export const NavBar = () => {
 			router.events.off('routeChangeStart', handleRouteChange);
 		};
 	}, [router.events]);
+	// endregion
 
 	return (
 		<>

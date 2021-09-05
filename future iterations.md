@@ -5,3 +5,4 @@
 -   [Unit test Suite] - Setting up a basic unit test suite should greatly support future iteration of the application.
 -   [style-lint] - Adding a style linters will be beneficial.
 -   [CI] - A continuous integrating pipeline will allow for better work flow.
+-   [table-view] - The grid view although very fancy a complementary table view will really help to flesh out the UI.

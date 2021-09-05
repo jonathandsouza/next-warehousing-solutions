@@ -9,12 +9,15 @@ import SaleCard from './sale-card/sale-card';
 import SaleDetails from './sale-details/sale-details';
 
 const SalesList = () => {
+	// region state
 	const [sales, setSale] = useState<Array<ISale> | null>(null);
 	const [showDrawer, setShowDrawer] = useState<boolean>(false);
 	const [activeSale, setActiveSale] = useState<ISale | null>(null);
 	const [failedToFetch, setFailedToFetch] = useState(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	// endregion
 
+	// region fetch sale data
 	const fetchSale = () => {
 		setIsLoading(true);
 
@@ -38,10 +41,13 @@ const SalesList = () => {
 				setIsLoading(false);
 			});
 	};
+	// endregion
 
+	// region use effect
 	useEffect(() => {
 		fetchSale();
 	}, []);
+	// endregion
 
 	return (
 		<>
