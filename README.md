@@ -1,34 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next warehousing solutions (NWS)
 
-## Getting Started
+A complete end to end solution for every warehousing management needs.
 
-First, run the development server:
+## Tech
 
-```bash
-npm run dev
-# or
+NWS uses next gen technologies for long term support and scalability.
+
+-   [NextJS] - Production grade React applications that scale.
+-   [ReactJS] - A JavaScript library for building user interfaces.
+-   [TypeScript] - TypeScript is a strongly typed programming language which builds on JavaScript giving you better tooling at any scale.
+-   [SCSS] - Sass is the most mature, stable, and powerful professional grade CSS extension language in the world.
+-   [Docker] - Build safer, share wider, run faster.
+
+## Installation
+
+NWS requires [Node.js](https://nodejs.org/) v10+ to run.
+
+Install the dependencies and devDependencies and start the server.
+
+```sh
+yarn install
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+For production environments...
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```sh
+yarn install --production
+yarn build
+yarn start
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## The Cloud
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+NWS is uses container tech to make it easily deployable on any cloud environment.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```sh
+GCP front-end: https://nws-front-end-gt4ygkccuq-uc.a.run.app/
+GCP back-end: https://nws-back-end-gt4ygkccuq-ez.a.run.app/
+```
