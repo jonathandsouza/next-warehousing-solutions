@@ -96,7 +96,9 @@ const SalesList = () => {
 				</>
 			)}
 
-			{failedToFetch && <FailedToFetch onRefetchClick={fetchSale} />}
+			{!isLoading && failedToFetch && (
+				<FailedToFetch onRefetchClick={fetchSale} />
+			)}
 
 			{!isLoading && sales && sales.length > 0 && (
 				<GridView

@@ -94,7 +94,9 @@ const ArticlesList = () => {
 				</>
 			)}
 
-			{failedToFetch && <FailedToFetch onRefetchClick={fetchArticles} />}
+			{!isLoading && failedToFetch && (
+				<FailedToFetch onRefetchClick={fetchArticles} />
+			)}
 
 			{!isLoading && articles && articles.length > 0 && (
 				<GridView

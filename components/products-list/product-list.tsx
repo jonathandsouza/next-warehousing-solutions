@@ -100,7 +100,9 @@ const ProductList = () => {
 				</>
 			)}
 
-			{failedToFetch && <FailedToFetch onRefetchClick={fetchProducts} />}
+			{!isLoading && failedToFetch && (
+				<FailedToFetch onRefetchClick={fetchProducts} />
+			)}
 
 			{!isLoading && products && products.length > 0 && (
 				<GridView
