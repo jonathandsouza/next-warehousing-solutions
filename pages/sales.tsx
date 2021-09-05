@@ -1,17 +1,9 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import { useState } from 'react'
-import { IProduct } from '../models/products'
-import ProductService from '../services/products'
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import React from 'react';
+import SalesList from '../components/sales-list/sales-list';
 
-const Products: NextPage = () => {
-	const [state, setState] = useState<Array<IProduct>>([])
-	const [singleProduct, setSingleProduct] = useState<IProduct | null>(null)
-
-	const [createdProduct, setCreatedProduct] = useState<any>(null)
-
-	const [removedProduct, setRemovedProduct] = useState<any>(null)
-
+const Sales: NextPage = () => {
 	return (
 		<>
 			<Head>
@@ -22,104 +14,11 @@ const Products: NextPage = () => {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-
-			<h1>Sales</h1>
-
-			<button
-				onClick={() => {
-					ProductService.getAllProducts()
-						.then((resp) => setState(resp))
-						.catch((err) => console.log('caught this error', err))
-				}}
-			>
-				getAllProducts
-			</button>
-
-			<br />
-			<br />
-
-			<button
-				onClick={() => {
-					ProductService.getProductById(
-						'a269a247-0d38-4b47-9630-79c9ae545b68'
-					)
-						.then((resp) => setSingleProduct(resp))
-						.catch((err) =>
-							console.log('caught this error getArticleById', err)
-						)
-				}}
-			>
-				getArticleById
-			</button>
-
-			<br />
-			<br />
-
-			<button
-				onClick={() => {
-					ProductService.createProduct({
-						name: 'jona',
-						articles: [],
-					})
-						.then((resp) => setCreatedProduct(resp))
-						.catch((err) => console.log('caught this error', err))
-				}}
-			>
-				createArticle
-			</button>
-
-			<br />
-			<br />
-
-			<button
-				onClick={() => {
-					ProductService.removeProductById(
-						'c6a60e18-d8e2-4f84-b051-8ef824227a8f'
-					)
-						.then((resp) => setRemovedProduct(resp))
-						.catch((err) => console.log('caught this error', err))
-				}}
-			>
-				removeArticleById
-			</button>
-
-			<br />
-			<br />
-
-			<button
-				onClick={() => {
-					ProductService.updateProduct({
-						id: 'a269a247-0d38-4b47-9630-79c9ae545b68',
-						name: 'Dining Chair',
-						articles: [
-							{
-								id: '0517f083-0e15-4876-8d1f-6fa45900431c',
-								amountRequired: 9,
-							},
-							{
-								id: '831b92b8-677b-42cc-a585-335ea4ccccb6',
-								amountRequired: 8,
-							},
-							{
-								id: 'addc65a8-c759-41d8-a18a-89fe446ad484',
-								amountRequired: 7,
-							},
-						],
-					})
-						.then((resp) => setRemovedProduct(resp))
-						.catch((err) => console.log('caught this error', err))
-				}}
-			>
-				updateArticles
-			</button>
-
-			<p>state: {JSON.stringify(state)}</p>
-
-			<p>singleArticle: {JSON.stringify(singleProduct)}</p>
-
-			<p>createdArticle: {JSON.stringify(createdProduct)}</p>
+			<div className="container-fluid">
+				<SalesList />
+			</div>
 		</>
-	)
-}
+	);
+};
 
-export default Products
+export default Sales;
