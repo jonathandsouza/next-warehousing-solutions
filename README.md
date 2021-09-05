@@ -1,6 +1,6 @@
 # Next warehousing solutions (NWS)
 
-A complete end to end solution for every warehousing management needs.
+A complete end to end solution for every warehousing management need.
 
 ## Tech
 
@@ -33,7 +33,7 @@ yarn start
 
 ## The Cloud
 
-NWS is uses container tech to make it easily deployable on any cloud environment.
+NWS uses container tech to make it easily deployable on any cloud environment.
 
 ```sh
 GCP front-end: https://nws-front-end-gt4ygkccuq-uc.a.run.app/
